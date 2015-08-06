@@ -6,6 +6,9 @@
 package Usuario.Coordinador;
 
 import Controladores.CtrlPrincipal;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -31,58 +34,55 @@ public class ICoordinador extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaNotificaciones = new javax.swing.JTable();
         MenuBar = new javax.swing.JMenuBar();
         Salir = new javax.swing.JMenu();
         ExitOption = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        EditarPerfil = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        acciones = new javax.swing.JMenu();
+        generarPlanilla = new javax.swing.JMenuItem();
+        visualizarPlazas = new javax.swing.JMenuItem();
+        publicarConcurso = new javax.swing.JMenuItem();
+        enviarSolicitud = new javax.swing.JMenuItem();
+        evaluarDcoumento = new javax.swing.JMenuItem();
+        completarPerfilAspirante = new javax.swing.JMenuItem();
+        aplicarConcurso = new javax.swing.JMenuItem();
+        notificarGanador = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Coordinador");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(0), "Notificaciones", 2, 0, new java.awt.Font("Consolas", 1, 24))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Notificaciones", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 24))); // NOI18N
         jPanel1.setToolTipText("");
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaNotificaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tablaNotificaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Materia", "Status", "Coordinador", "Fecha Inicio", "Fecha Fin", "Ganador"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaNotificaciones);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         Salir.setText("App");
@@ -105,82 +105,62 @@ public class ICoordinador extends javax.swing.JFrame {
 
         MenuBar.add(Salir);
 
-        jMenu3.setText("Perfil");
-        jMenu3.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        acciones.setText("Acciones");
+        acciones.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
 
-        EditarPerfil.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        EditarPerfil.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
-        EditarPerfil.setText("Ver");
-        EditarPerfil.addActionListener(new java.awt.event.ActionListener() {
+        generarPlanilla.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.SHIFT_MASK));
+        generarPlanilla.setText("Generar planilla");
+        generarPlanilla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditarPerfilActionPerformed(evt);
+                generarPlanillaActionPerformed(evt);
             }
         });
-        jMenu3.add(EditarPerfil);
+        acciones.add(generarPlanilla);
 
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem4.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
-        jMenuItem4.setText("Editar");
-        jMenu3.add(jMenuItem4);
-
-        MenuBar.add(jMenu3);
-
-        jMenu2.setText("Acciones");
-        jMenu2.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
-
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem1.setText("Generar planilla");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        visualizarPlazas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_MASK));
+        visualizarPlazas.setText("Visualizar Plazas");
+        visualizarPlazas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                visualizarPlazasActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        acciones.add(visualizarPlazas);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem2.setText("Visualizar Plazas");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        publicarConcurso.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_MASK));
+        publicarConcurso.setText("Publicar Concurso");
+        publicarConcurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                publicarConcursoActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        acciones.add(publicarConcurso);
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem3.setText("Publicar Concurso");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        enviarSolicitud.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK));
+        enviarSolicitud.setText("Enviar Solicitud");
+        acciones.add(enviarSolicitud);
+
+        evaluarDcoumento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.SHIFT_MASK));
+        evaluarDcoumento.setText("Evaluar Documento");
+        acciones.add(evaluarDcoumento);
+
+        completarPerfilAspirante.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK));
+        completarPerfilAspirante.setText("Completar Perfil de Aspirante");
+        acciones.add(completarPerfilAspirante);
+
+        aplicarConcurso.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_MASK));
+        aplicarConcurso.setText("Aplicar Concurso");
+        acciones.add(aplicarConcurso);
+
+        notificarGanador.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_MASK));
+        notificarGanador.setText("Notificar Ganador");
+        notificarGanador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                notificarGanadorActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        acciones.add(notificarGanador);
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem5.setText("Enviar Solicitud");
-        jMenu2.add(jMenuItem5);
-
-        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem6.setText("Evaluar Documento");
-        jMenu2.add(jMenuItem6);
-
-        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem7.setText("Completar Perfil de Aspirante");
-        jMenu2.add(jMenuItem7);
-
-        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem8.setText("Aplicar Concurso");
-        jMenu2.add(jMenuItem8);
-
-        jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem9.setText("Notificar Ganador");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem9);
-
-        MenuBar.add(jMenu2);
+        MenuBar.add(acciones);
 
         setJMenuBar(MenuBar);
 
@@ -189,49 +169,51 @@ public class ICoordinador extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        jPanel1.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ExitOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitOptionMouseClicked
-        // TODO add your handling code here:
-        CtrlPrincipal.instance().selectOption(0);
+        try {
+            // TODO add your handling code here:
+            CtrlPrincipal.instance().selectOption(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ExitOptionMouseClicked
 
     private void ExitOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitOptionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ExitOptionActionPerformed
 
-    private void EditarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarPerfilActionPerformed
+    private void generarPlanillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarPlanillaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_EditarPerfilActionPerformed
+    }//GEN-LAST:event_generarPlanillaActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void publicarConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicarConcursoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_publicarConcursoActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void visualizarPlazasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarPlazasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_visualizarPlazasActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void notificarGanadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notificarGanadorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_notificarGanadorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,23 +251,20 @@ public class ICoordinador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem EditarPerfil;
     private javax.swing.JMenuItem ExitOption;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JMenu Salir;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenu acciones;
+    private javax.swing.JMenuItem aplicarConcurso;
+    private javax.swing.JMenuItem completarPerfilAspirante;
+    private javax.swing.JMenuItem enviarSolicitud;
+    private javax.swing.JMenuItem evaluarDcoumento;
+    private javax.swing.JMenuItem generarPlanilla;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JMenuItem notificarGanador;
+    private javax.swing.JMenuItem publicarConcurso;
+    private javax.swing.JTable tablaNotificaciones;
+    private javax.swing.JMenuItem visualizarPlazas;
     // End of variables declaration//GEN-END:variables
 }

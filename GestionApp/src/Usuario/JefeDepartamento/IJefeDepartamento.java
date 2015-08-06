@@ -5,6 +5,19 @@
  */
 package Usuario.JefeDepartamento;
 
+import BD.CtrlBD;
+import Controladores.CtrlPrincipal;
+import Main.IPrincipal;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import sun.swing.table.DefaultTableCellHeaderRenderer;
+
 /**
  *
  * @author Xiomara
@@ -14,8 +27,38 @@ public class IJefeDepartamento extends javax.swing.JFrame {
     /**
      * Creates new form IJefeDepartamento
      */
-    public IJefeDepartamento() {
+    public IJefeDepartamento() throws SQLException
+    {
         initComponents();
+        CtrlBD Contrller= new CtrlBD();
+        Contrller.Open();
+        Contrller.SetQuery("SELECT * FROM MATERIA_SEMESTRE");        
+        ResultSet auxRset=Contrller.GetQuery();
+        //Contrller.SetQuery("SELECT COUNT(*) FROM MATERIA_SEMESTRE");
+        //ResultSet countset=Contrller.GetQuery();
+        int fila=0,columna=0;       
+     
+        while (auxRset.next())
+        {
+            DefaultTableModel model= (DefaultTableModel) jTable1.getModel();
+            model.addRow(new Vector());
+            this.jTable1.setValueAt(auxRset.getString(1), fila, columna++);
+            this.jTable1.setValueAt(auxRset.getString(3), fila, columna++);
+            this.jTable1.setValueAt(auxRset.getString(2), fila, columna++);            
+            this.jTable1.setValueAt(auxRset.getString(4), fila, columna++);
+            this.jTable1.setValueAt(auxRset.getString(5), fila, columna++);
+            columna=0;
+            fila++;
+        }
+        
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellHeaderRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+               
+        for(int i = 0; i < this.jTable1.getColumnCount(); i++)
+        {
+            this.jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        
+        }
     }
 
     /**
@@ -33,9 +76,6 @@ public class IJefeDepartamento extends javax.swing.JFrame {
         MenuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -43,21 +83,19 @@ public class IJefeDepartamento extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Jefe de Departamento");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(0), "Notificaciones", 2, 0, new java.awt.Font("Consolas", 1, 24))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Plazas Asignadas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 24))); // NOI18N
         jPanel1.setToolTipText("");
 
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID Materia", "Nombre", "Semestre", "Cantidad Prepa I", "Cantidad Prepa II"
             }
         ));
+        jTable1.setEnabled(false);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -65,16 +103,16 @@ public class IJefeDepartamento extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jMenu1.setText("App");
@@ -92,31 +130,16 @@ public class IJefeDepartamento extends javax.swing.JFrame {
 
         MenuBar.add(jMenu1);
 
-        jMenu3.setText("Perfil");
-        jMenu3.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
-
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem3.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
-        jMenuItem3.setText("Ver");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem3);
-
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem4.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
-        jMenuItem4.setText("Editar");
-        jMenu3.add(jMenuItem4);
-
-        MenuBar.add(jMenu3);
-
         jMenu2.setText("Acciones");
         jMenu2.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_MASK));
         jMenuItem2.setText("Asignar Plazas");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK));
@@ -133,15 +156,15 @@ public class IJefeDepartamento extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(34, 34, 34))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -149,11 +172,26 @@ public class IJefeDepartamento extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        
+        try {
+            // TODO add your handling code here:
+            CtrlPrincipal.instance().selectOption(29);
+        } catch (SQLException ex) {
+            Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+        
+        try {
+            // TODO add your handling code here:
+            CtrlPrincipal.instance().selectOption(10);
+        } catch (SQLException ex) {
+            Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,14 +202,15 @@ public class IJefeDepartamento extends javax.swing.JFrame {
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    public javax.swing.JTable getJTable(){
+        return jTable1;
+    }
 }

@@ -14,8 +14,12 @@ import Usuario.TipoUsuario;
  */
 public class JefeDepartamento extends Perfil{
 
-    public JefeDepartamento(String nombre, String apellido, String cedula, String fecha_nac, String email, TipoUsuario tipo) {
+    public JefeDepartamento(String nombre, String apellido, String cedula, String fecha_nac, String email, TipoUsuario tipo)
+    {
         super(nombre, apellido, cedula, fecha_nac, email, tipo);
+        
+        
+        
     }
 
 
