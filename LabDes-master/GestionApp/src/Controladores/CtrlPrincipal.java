@@ -34,6 +34,7 @@ public class CtrlPrincipal
     public ICoordinador vistaCoordinador;
     public IAspirante vistaAspirante;
     public CtrlBD ctrlBD = new CtrlBD();
+    public IError vistaErrorJefe;
     
     private CtrlPrincipal() throws SQLException{
         
@@ -49,6 +50,7 @@ public class CtrlPrincipal
         vistaDirectorEscuela = new IDirectorEscuela();
         vistaCoordinador = new ICoordinador();
         vistaAspirante = new IAspirante();
+        vistaErrorJefe = new IError();
     }
     
     public static CtrlPrincipal instance() throws SQLException{//Al referirse a este controlador, invocarlo por este metodo
@@ -150,6 +152,11 @@ public class CtrlPrincipal
             case 12: //Acciones Asignar plazas (Boton)
                 
                 CtrlJefeDepartamento.instance().selectOption(4);
+                break;
+                
+            case 13: //Botón aceptar en el error de numero negativo
+                
+                CtrlJefeDepartamento.instance().selectOption(5);
                 break;
                 
                 

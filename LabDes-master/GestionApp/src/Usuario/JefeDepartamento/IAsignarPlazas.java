@@ -7,6 +7,7 @@ package Usuario.JefeDepartamento;
 
 import BD.CtrlBD;
 import Controladores.CtrlPrincipal;
+import Controladores.CtrlJefeDepartamento;
 import Main.IPrincipal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -57,6 +58,15 @@ public class IAsignarPlazas extends javax.swing.JFrame {
 
             for(int i = 0; i < this.jTable1.getColumnCount(); i++)
                 this.jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            
+            if(this.jTable1.getRowCount() > 0 )
+            {
+                this.idMateria.setText(this.jTable1.getModel().getValueAt(0,0).toString());
+                this.nombreMateria.setText(this.jTable1.getModel().getValueAt(0,1).toString());
+                this.semestreMateria.setText(this.jTable1.getModel().getValueAt(0,2).toString());
+                this.cantidadPreparadoresI.setText(this.jTable1.getModel().getValueAt(0,3).toString());
+                this.cantidadPreparadoresII.setText(this.jTable1.getModel().getValueAt(0,4).toString());
+            }
     }
 
     /**
@@ -193,18 +203,18 @@ public class IAsignarPlazas extends javax.swing.JFrame {
                                 .addGap(108, 108, 108)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cantidadPreparadoresII, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                                .addGap(446, 446, 446))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nombreMateria)
+                                    .addComponent(nombreMateria, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cantidadPreparadoresI)
-                                            .addComponent(idMateria)
-                                            .addComponent(semestreMateria))
-                                        .addGap(85, 85, 85)))
-                                .addGap(361, 361, 361))))))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(cantidadPreparadoresI, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                                            .addComponent(semestreMateria)
+                                            .addComponent(idMateria))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(361, 361, 361))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(cantidadPreparadoresII, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -418,14 +428,20 @@ public class IAsignarPlazas extends javax.swing.JFrame {
         return semestreMateria.getText();
     }
     
-    public int getCantidadPreparadoresI()
+    public int getCantidadPreparadoresI() throws SQLException
     {
-        return Integer.parseInt(cantidadPreparadoresI.getText());
+        if(CtrlJefeDepartamento.instance().isNumber(cantidadPreparadoresI.getText()))
+             return Integer.parseInt(cantidadPreparadoresI.getText());
+        
+        return -1;
     }
     
-    public int getCantidadPreparadoresII()
+    public int getCantidadPreparadoresII() throws SQLException
     {
-        return Integer.parseInt(cantidadPreparadoresII.getText());
+        if(CtrlJefeDepartamento.instance().isNumber(cantidadPreparadoresI.getText()))
+             return Integer.parseInt(cantidadPreparadoresII.getText());
+        
+        return -1;
     }
     
     

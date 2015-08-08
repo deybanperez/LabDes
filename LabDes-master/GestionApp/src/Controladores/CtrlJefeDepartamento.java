@@ -15,6 +15,7 @@ import Usuario.Preparador.IPreparador;
 import Usuario.SecretariaDepartamento.ISecretariaDepartamento;
 import Usuario.SecretariaEscuela.ISecretariaEscuela;
 import java.sql.SQLException;
+import oracle.net.aso.i;
 
 /**
  *
@@ -74,18 +75,42 @@ public class CtrlJefeDepartamento {
                 
                 int j=0,id_materia,prepa1,prepa2;
                 String sem;
+                
                 id_materia = CtrlPrincipal.instance().vistaAsignarPlazas.getIDMateria();
                 sem = CtrlPrincipal.instance().vistaAsignarPlazas.getSemestre(); 
                 prepa1 = CtrlPrincipal.instance().vistaAsignarPlazas.getCantidadPreparadoresI(); 
                 prepa2 = CtrlPrincipal.instance().vistaAsignarPlazas.getCantidadPreparadoresII();
-    
-                if(CtrlPrincipal.instance().ctrlBD.SetQuery("UPDATE MATERIA_SEMESTRE SET CANT_PLAZAS_PI="+prepa1+", CANT_PLAZAS_PII="+prepa2+" WHERE ID_MATERIA="+id_materia+" AND SEMESTRE='"+sem+"'"))
+                
+                
+                if( (prepa2 != -1) && (prepa1 != -1) )
                 {
-                    if(CtrlPrincipal.instance().ctrlBD.SetQuery("COMMIT"))
-                        System.out.println("Update realizado");
+                    
+                    if( (prepa2 >=0 ) && (prepa1 >= 0))
+                    {
+                        if(CtrlPrincipal.instance().ctrlBD.SetQuery("UPDATE MATERIA_SEMESTRE SET CANT_PLAZAS_PI="+prepa1+", CANT_PLAZAS_PII="+prepa2+" WHERE ID_MATERIA="+id_materia+" AND SEMESTRE='"+sem+"'"))
+                        {
+                            if(CtrlPrincipal.instance().ctrlBD.SetQuery("COMMIT"))
+                                System.out.println("Update realizado");
 
+                        }
+
+                        CtrlPrincipal.instance().vistaAsignarPlazas.setVisible(false);
+                        CtrlPrincipal.instance().vistaAsignarPlazas = new IAsignarPlazas();
+                        CtrlPrincipal.instance().vistaAsignarPlazas.setLocationRelativeTo(null);
+                        CtrlPrincipal.instance().vistaAsignarPlazas.setVisible(true);
+                    
+                    }
+                }else
+                {
+                    CtrlPrincipal.instance().vistaErrorJefe.setLocationRelativeTo(null);
+                    CtrlPrincipal.instance().vistaErrorJefe.setVisible(true);
                 }
-                CtrlPrincipal.instance().vistaAsignarPlazas = new IAsignarPlazas();             
+                
+                break;
+                
+            case 5:
+                
+                CtrlPrincipal.instance().vistaErrorJefe.setVisible(false);
                 
                 break;
                 
@@ -103,7 +128,24 @@ public class CtrlJefeDepartamento {
                 CtrlPrincipal.instance().IPpal.setVisible(true);
                 break;
         }
-    }    
+    }
+    
+    
+    
+    public boolean isNumber(String text)
+    {
+        
+        for(int i = 0; i < text.length(); i++)
+        {
+            
+            if(!Character.isDigit(text.charAt(i)))
+                return false;
+        }
+    
+    
+    
+        return true;
+    }
     
    
 }

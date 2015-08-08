@@ -3,14 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/administrador/Desktop/LabDes-master/GestionApp/src/Controladores/CtrlDirectorEscuela.java</file>
-            <file>file:/C:/Users/administrador/Desktop/LabDes-master/GestionApp/src/Controladores/CtrlPrincipal.java</file>
-            <file>file:/C:/Users/administrador/Desktop/LabDes-master/GestionApp/src/Controladores/CtrlJefeDepartamento.java</file>
-            <file>file:/C:/Users/administrador/Desktop/LabDes-master/GestionApp/src/Controladores/CtrlAspirante.java</file>
-            <file>file:/C:/Users/administrador/Desktop/LabDes-master/GestionApp/src/Usuario/JefeDepartamento/IAsignarPlazas.java</file>
-            <file>file:/C:/Users/administrador/Desktop/LabDes-master/GestionApp/src/Usuario/JefeDepartamento/IJefeDepartamento.java</file>
-            <file>file:/C:/Users/administrador/Desktop/LabDes-master/GestionApp/src/Controladores/CtrlCoordinador.java</file>
-            <file>file:/C:/Users/administrador/Desktop/LabDes-master/GestionApp/src/BD/CtrlBD.java</file>
+            <file>file:/C:/Users/Deyban%20Perez/Documents/Repos/LabDes/LabDes-master/GestionApp/src/Controladores/CtrlJefeDepartamento.java</file>
+            <file>file:/C:/Users/Deyban%20Perez/Documents/Repos/LabDes/LabDes-master/GestionApp/src/Usuario/Coordinador/ICoordinador.java</file>
+            <file>file:/C:/Users/Deyban%20Perez/Documents/Repos/LabDes/LabDes-master/GestionApp/src/Usuario/JefeDepartamento/IAsignarPlazas.java</file>
+            <file>file:/C:/Users/Deyban%20Perez/Documents/Repos/LabDes/LabDes-master/GestionApp/src/Controladores/CtrlPrincipal.java</file>
+            <file>file:/C:/Users/Deyban%20Perez/Documents/Repos/LabDes/LabDes-master/GestionApp/src/Controladores/CtrlCoordinador.java</file>
+            <file>file:/C:/Users/Deyban%20Perez/Documents/Repos/LabDes/LabDes-master/GestionApp/src/Usuario/JefeDepartamento/IErrorNumeroNegativo.java</file>
         </group>
     </open-files>
 </project-private>
