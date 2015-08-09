@@ -60,7 +60,7 @@ public class IPrincipal extends javax.swing.JFrame
         });
 
         jLabel1.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
-        jLabel1.setText("Usuario:");
+        jLabel1.setText("Cédula");
 
         jLabel2.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
         jLabel2.setText("Password:");
@@ -148,6 +148,8 @@ public class IPrincipal extends javax.swing.JFrame
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
         
+        
+        
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
@@ -218,12 +220,23 @@ public class IPrincipal extends javax.swing.JFrame
 
 public String getPasswordField()
 {
-    return jPasswordField1.getText();
+    if(jPasswordField1.getText().length() > 0)
+        return jPasswordField1.getText();
+    
+    return null;
 }
 
-public String getUserName()
+public int getUserName() throws SQLException
 {
-    return jTextField1.getText();
+    if(jTextField1.getText().length() > 0)
+    {
+        if(CtrlPrincipal.instance().isNumber(jTextField1.getText()))
+            return Integer.parseInt(jTextField1.getText());
+        
+        return -1;
+    }
+    
+    return -2;
 }
 
 

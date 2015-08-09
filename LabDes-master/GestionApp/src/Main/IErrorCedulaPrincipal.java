@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Usuario.JefeDepartamento;
+package Main;
 
+import Usuario.JefeDepartamento.*;
 import Controladores.CtrlJefeDepartamento;
 import Controladores.CtrlPrincipal;
 import java.sql.SQLException;
@@ -15,12 +16,12 @@ import java.util.logging.Logger;
  *
  * @author Deyban Perez
  */
-public class IError extends javax.swing.JFrame {
+public class IErrorCedulaPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form IErrorNumeroNegativo
      */
-    public IError() {
+    public IErrorCedulaPrincipal() {
         initComponents();
     }
 
@@ -39,7 +40,7 @@ public class IError extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("ERROR: DATOS INGRESADOS INCORRECTOS");
+        jLabel1.setText("ERROR: El campo cédula debe ser numérico");
 
         jButton1.setText("Aceptar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -53,13 +54,17 @@ public class IError extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(47, 47, 47))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                .addGap(17, 17, 17)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(51, 51, 51)
                 .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -69,9 +74,9 @@ public class IError extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             // TODO add your handling code here:
-            CtrlPrincipal.instance().selectOption(13);
+            CtrlPrincipal.instance().selectOption(3);
         } catch (SQLException ex) {
-            Logger.getLogger(IError.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IErrorCedulaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

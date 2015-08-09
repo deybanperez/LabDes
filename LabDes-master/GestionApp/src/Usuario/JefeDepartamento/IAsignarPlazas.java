@@ -430,7 +430,7 @@ public class IAsignarPlazas extends javax.swing.JFrame {
     
     public int getCantidadPreparadoresI() throws SQLException
     {
-        if(CtrlJefeDepartamento.instance().isNumber(cantidadPreparadoresI.getText()))
+        if(CtrlPrincipal.instance().isNumber(cantidadPreparadoresI.getText()))
              return Integer.parseInt(cantidadPreparadoresI.getText());
         
         return -1;
@@ -438,7 +438,7 @@ public class IAsignarPlazas extends javax.swing.JFrame {
     
     public int getCantidadPreparadoresII() throws SQLException
     {
-        if(CtrlJefeDepartamento.instance().isNumber(cantidadPreparadoresI.getText()))
+        if(CtrlPrincipal.instance().isNumber(cantidadPreparadoresI.getText()))
              return Integer.parseInt(cantidadPreparadoresII.getText());
         
         return -1;
