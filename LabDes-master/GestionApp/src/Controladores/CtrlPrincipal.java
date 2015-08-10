@@ -153,7 +153,6 @@ public class CtrlPrincipal
                 
             case 3: //Volver a la iinterfaz principal (boton aceptar (IfazErrorCedula - > Pantalla principal))
                 vistaErrorCedulaPrincipal.setVisible(false);
-                System.err.println("Error");
                 break;
                 
             case 4: //Volver a la iinterfaz principal (boton aceptar (IfazErrorUsuarioContraseña - > Pantalla principal))
