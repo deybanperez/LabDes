@@ -71,7 +71,8 @@ public class CtrlPrincipal
     public void selectOption(int opc) throws SQLException{
     
     
-        switch(opc){
+        switch(opc)
+        {
             case 0:
                 System.exit(0);
             break;
@@ -198,6 +199,14 @@ public class CtrlPrincipal
                 
             case 41:
                 CtrlCoordinador.instance().selectOption(3);
+                break;
+                
+            case 68:
+                CtrlCoordinador.instance().selectOption(101);
+                break;
+                
+            case 69:
+                CtrlCoordinador.instance().selectOption(100);
                 break;
                 
            //Aca comienza todo el manejo de aspirante     

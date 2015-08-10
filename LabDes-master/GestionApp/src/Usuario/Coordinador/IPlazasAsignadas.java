@@ -234,6 +234,12 @@ public class IPlazasAsignadas extends javax.swing.JFrame {
 
     private void ExitOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitOptionActionPerformed
         // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            CtrlPrincipal.instance().selectOption(69);
+        } catch (SQLException ex) {
+            Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ExitOptionActionPerformed
 
     private void generarPlanillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarPlanillaActionPerformed
