@@ -14,7 +14,7 @@ import Usuario.TipoUsuario;
  */
 public class Coordinador extends Perfil {
 
-    public Coordinador(String nombre, String apellido, String cedula, String fecha_nac, String email, TipoUsuario tipo) {
+    public Coordinador(String nombre, String apellido, String cedula, String fecha_nac, String email, TipoUsuario tipo){
         super(nombre, apellido, cedula, fecha_nac, email, tipo);
     }
 

@@ -8,6 +8,7 @@ package Controladores;
 import Main.IPrincipal;
 import Usuario.Aspirante.IAspirante;
 import Usuario.Coordinador.ICoordinador;
+import Usuario.Coordinador.IPlazasAsignadas;
 import Usuario.DirectorEscuela.IDirectorEscuela;
 import Usuario.JefeDepartamento.IAsignarPlazas;
 import Usuario.JefeDepartamento.IJefeDepartamento;
@@ -47,10 +48,26 @@ public class CtrlCoordinador {
             
             case 1: //Interfaz Principal
                 
+                CtrlPrincipal.instance().IPpal.setVisible(false);
+                CtrlPrincipal.instance().vistaCoordinador = new ICoordinador();
                 CtrlPrincipal.instance().vistaCoordinador.setLocationRelativeTo(null);
                 CtrlPrincipal.instance().vistaCoordinador.setVisible(true);
-                CtrlPrincipal.instance().IPpal.setVisible(false);
-
+            break;
+                
+            case 2:
+                
+                CtrlPrincipal.instance().vistaCoordinador.setVisible(false);
+                CtrlPrincipal.instance().vistaPlazasAsignadasCoordinador = new IPlazasAsignadas();
+                CtrlPrincipal.instance().vistaPlazasAsignadasCoordinador.setLocationRelativeTo(null);
+                CtrlPrincipal.instance().vistaPlazasAsignadasCoordinador.setVisible(true);
+            break;
+                
+            case 3:
+                CtrlPrincipal.instance().vistaPlazasAsignadasCoordinador.setVisible(false);
+                CtrlPrincipal.instance().vistaCoordinador.setLocationRelativeTo(null);
+                CtrlPrincipal.instance().vistaCoordinador.setVisible(true);
+                
+                
             break;
         }
     }    

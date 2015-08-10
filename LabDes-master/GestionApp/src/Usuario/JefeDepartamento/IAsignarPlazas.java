@@ -430,16 +430,22 @@ public class IAsignarPlazas extends javax.swing.JFrame {
     
     public int getCantidadPreparadoresI() throws SQLException
     {
-        if(CtrlPrincipal.instance().isNumber(cantidadPreparadoresI.getText()))
-             return Integer.parseInt(cantidadPreparadoresI.getText());
+        if(cantidadPreparadoresII.getText().length() > 0)
+        {
+            if(CtrlPrincipal.instance().isNumber(cantidadPreparadoresI.getText()))
+                 return Integer.parseInt(cantidadPreparadoresI.getText());
+        }
         
         return -1;
     }
     
     public int getCantidadPreparadoresII() throws SQLException
     {
-        if(CtrlPrincipal.instance().isNumber(cantidadPreparadoresI.getText()))
-             return Integer.parseInt(cantidadPreparadoresII.getText());
+        if(cantidadPreparadoresII.getText().length() > 0)
+        {
+            if(CtrlPrincipal.instance().isNumber(cantidadPreparadoresII.getText()))
+                 return Integer.parseInt(cantidadPreparadoresII.getText());
+        }
         
         return -1;
     }

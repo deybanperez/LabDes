@@ -6,7 +6,6 @@
 package Usuario.Coordinador;
 
 import Controladores.CtrlPrincipal;
-import Main.IPrincipal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -19,38 +18,39 @@ import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 /**
  *
- * @author Xiomara
+ * @author administrador
  */
-public class ICoordinador extends javax.swing.JFrame {
+public class IPlazasAsignadas extends javax.swing.JFrame {
 
     /**
-     * Creates new form ICoordinador
+     * Creates new form IPlazasAsignadas
      */
-    public ICoordinador() throws SQLException
+    public IPlazasAsignadas() throws SQLException
     {
-        int fila=0,columna=0;
+         int fila=0,columna=0;
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellHeaderRenderer();
         
         initComponents(); 
-        CtrlPrincipal.instance().ctrlBD.SetQuery("SELECT MS.ID_MATERIA,MS.SEMESTRE,MS.NOMBRE_MATERIA FROM MATERIA_SEMESTRE MS, COORDINADOR C WHERE MS.ID_MATERIA = C.ID_MATERIA AND MS.SEMESTRE = C.SEMESTRE AND C.CEDULA ="+CtrlPrincipal.instance().sesionCoordinador.getCedula());        
+       CtrlPrincipal.instance().ctrlBD.SetQuery("SELECT MS.ID_MATERIA,MS.SEMESTRE,MS.NOMBRE_MATERIA, MS.CANT_PLAZAS_PI, MS.CANT_PLAZAS_PII FROM MATERIA_SEMESTRE MS, COORDINADOR C WHERE MS.ID_MATERIA = C.ID_MATERIA AND MS.SEMESTRE = C.SEMESTRE AND C.CEDULA ="+CtrlPrincipal.instance().sesionCoordinador.getCedula());       
         ResultSet auxRset = CtrlPrincipal.instance().ctrlBD.GetQuery();
      
         while (auxRset.next())
         {
-            DefaultTableModel model= (DefaultTableModel) tablaNotificaciones.getModel();
+            DefaultTableModel model= (DefaultTableModel) jTable1.getModel();
             model.addRow(new Vector());
-            tablaNotificaciones.setValueAt(auxRset.getString(1), fila, columna++);
-            tablaNotificaciones.setValueAt(auxRset.getString(2), fila, columna++);
-            tablaNotificaciones.setValueAt(auxRset.getString(3), fila, columna++);
+            this.jTable1.setValueAt(auxRset.getString(1), fila, columna++);
+            this.jTable1.setValueAt(auxRset.getString(3), fila, columna++);
+            this.jTable1.setValueAt(auxRset.getString(2), fila, columna++);            
+            this.jTable1.setValueAt(auxRset.getString(4), fila, columna++);
+            this.jTable1.setValueAt(auxRset.getString(5), fila, columna++);
             columna=0;
             fila++;
         }
         
-        jLabel1.setText("Usuario: "+CtrlPrincipal.instance().sesionCoordinador.getNombre()+" "+CtrlPrincipal.instance().sesionCoordinador.getApellido());
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
                
-        for(int i = 0; i < this.tablaNotificaciones.getColumnCount(); i++)
-            this.tablaNotificaciones.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        for(int i = 0; i < this.jTable1.getColumnCount(); i++)
+            this.jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
     }
 
     /**
@@ -64,8 +64,8 @@ public class ICoordinador extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaNotificaciones = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         MenuBar = new javax.swing.JMenuBar();
         Salir = new javax.swing.JMenu();
         ExitOption = new javax.swing.JMenuItem();
@@ -80,37 +80,47 @@ public class ICoordinador extends javax.swing.JFrame {
         notificarGanador = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Coordinador");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Materias Coordinadas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 24))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Plazas Asignadas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 24))); // NOI18N
         jPanel1.setToolTipText("");
 
-        tablaNotificaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tablaNotificaciones.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Código", "Semestre", "Nombre"
+                "ID Materia", "Nombre", "Semestre", "Cantidad Prepa I", "Cantidad Prepa II"
             }
         ));
-        tablaNotificaciones.setEnabled(false);
-        jScrollPane1.setViewportView(tablaNotificaciones);
+        jTable1.setEnabled(false);
+        jScrollPane1.setViewportView(jTable1);
+
+        jButton1.setText("Volver");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -197,26 +207,18 @@ public class ICoordinador extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(270, 270, 270)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(27, 27, 27))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(34, 34, 34))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(115, 115, 115))
         );
-
-        jPanel1.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -238,23 +240,25 @@ public class ICoordinador extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_generarPlanillaActionPerformed
 
+    private void visualizarPlazasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarPlazasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_visualizarPlazasActionPerformed
+
     private void publicarConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicarConcursoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_publicarConcursoActionPerformed
 
-    private void visualizarPlazasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarPlazasActionPerformed
-        // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            CtrlPrincipal.instance().selectOption(40);
-        } catch (SQLException ex) {
-            Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_visualizarPlazasActionPerformed
-
     private void notificarGanadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notificarGanadorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_notificarGanadorActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            CtrlPrincipal.instance().selectOption(41);
+        } catch (SQLException ex) {
+            Logger.getLogger(IPlazasAsignadas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -267,16 +271,12 @@ public class ICoordinador extends javax.swing.JFrame {
     private javax.swing.JMenuItem enviarSolicitud;
     private javax.swing.JMenuItem evaluarDcoumento;
     private javax.swing.JMenuItem generarPlanilla;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JMenuItem notificarGanador;
     private javax.swing.JMenuItem publicarConcurso;
-    private javax.swing.JTable tablaNotificaciones;
     private javax.swing.JMenuItem visualizarPlazas;
     // End of variables declaration//GEN-END:variables
-    public javax.swing.JTable getJTable(){
-        return tablaNotificaciones;
-    }
 }
-

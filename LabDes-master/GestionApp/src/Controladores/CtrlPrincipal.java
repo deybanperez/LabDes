@@ -6,9 +6,6 @@
 package Controladores;
 
 import BD.CtrlBD;
-import Main.IErrorCedulaPrincipal;
-import Main.IErrorLlenarCampos;
-import Main.IErrorUsuarioContraseña;
 import Main.IPrincipal;
 import Usuario.Aspirante.IAspirante;
 import java.sql.ResultSet;
@@ -19,6 +16,8 @@ import Usuario.JefeDepartamento.*;
 import Usuario.Preparador.*;
 import Usuario.SecretariaDepartamento.*;
 import Usuario.SecretariaEscuela.*;
+import Usuario.TipoUsuario;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,10 +36,8 @@ public class CtrlPrincipal
     public ICoordinador vistaCoordinador;
     public IAspirante vistaAspirante;
     public CtrlBD ctrlBD = new CtrlBD();
-    public IError vistaErrorJefe;
-    public IErrorCedulaPrincipal vistaErrorCedulaPrincipal;
-    private IErrorUsuarioContraseña vistaErrorUsuarioContraseñaPrincipal;
-    private IErrorLlenarCampos vistaErrorLlenarCampos;
+    public Coordinador sesionCoordinador;
+    public IPlazasAsignadas vistaPlazasAsignadasCoordinador;
     
     private CtrlPrincipal() throws SQLException{
         
@@ -54,12 +51,7 @@ public class CtrlPrincipal
         vistaSecretariaDepartamento = new ISecretariaDepartamento();
         vistaPreparador = new IPreparador();
         vistaDirectorEscuela = new IDirectorEscuela();
-        vistaCoordinador = new ICoordinador();
         vistaAspirante = new IAspirante();
-        vistaErrorJefe = new IError();
-        vistaErrorCedulaPrincipal = new IErrorCedulaPrincipal();
-        vistaErrorUsuarioContraseñaPrincipal = new IErrorUsuarioContraseña();
-        vistaErrorLlenarCampos = new IErrorLlenarCampos(); 
     }
     
     public static CtrlPrincipal instance() throws SQLException{//Al referirse a este controlador, invocarlo por este metodo
@@ -101,7 +93,7 @@ public class CtrlPrincipal
                 {
                     if(user != -1)
                     {
-                        if(ctrlBD.SetQuery("SELECT PASSWORD, TIPO FROM USUARIO WHERE CEDULA ='"+user+"'"))
+                        if(ctrlBD.SetQuery("SELECT PASSWORD, TIPO_USUARIO FROM USUARIO WHERE CEDULA ='"+user+"'"))
                         {
                             auxRset=ctrlBD.GetQuery();
 
@@ -119,7 +111,23 @@ public class CtrlPrincipal
                                             CtrlAspirante.instance().selectOption(1);                                
                                             break;
                                         case "COORDINADOR":
-                                            CtrlCoordinador.instance().selectOption(1);
+                                            
+                                            String nombre, apellido, cedula, email;
+                                            
+                                            ctrlBD.SetQuery("SELECT * FROM USUARIO WHERE CEDULA ='"+user+"'");
+                                            auxRset=ctrlBD.GetQuery();
+                                            
+                                            if(auxRset.next())
+                                                
+                                            {
+                                                nombre = auxRset.getString(3);
+                                                apellido = auxRset.getString(4);
+                                                cedula = auxRset.getString(1);
+                                                email = auxRset.getString(7);
+                                                sesionCoordinador = new Coordinador(nombre, apellido, cedula, null, email,TipoUsuario.COORDINADOR);
+                                                CtrlCoordinador.instance().selectOption(1);
+                                            }
+                                             
                                              break;
                                         case "DIRECTORESCUELA":
                                             CtrlDirectorEscuela.instance().selectOption(1);
@@ -141,46 +149,16 @@ public class CtrlPrincipal
                                             break;
                                     }
                                 }else
-                                    this.selectOption(5);
+                                    JOptionPane.showMessageDialog(null, "Usuario o contraseña inválidos");
                             }else
-                                this.selectOption(5);
+                                JOptionPane.showMessageDialog(null, "Usuario o contraseña inválidos");
                         }
                     }else
-                        this.selectOption(8);
+                        JOptionPane.showMessageDialog(null, "El tipo de dato cédula debe ser numérico");
                 }else
-                    this.selectOption(6);
+                    JOptionPane.showMessageDialog(null, "Se deben llenar los campos");
             break;
-                
-            case 3: //Volver a la iinterfaz principal (boton aceptar (IfazErrorCedula - > Pantalla principal))
-                vistaErrorCedulaPrincipal.setVisible(false);
-                break;
-                
-            case 4: //Volver a la iinterfaz principal (boton aceptar (IfazErrorUsuarioContraseña - > Pantalla principal))
-                
-                vistaErrorUsuarioContraseñaPrincipal.setVisible(false);
-                break;
-                
-            case 5: //Desplegar la interfaz de ErrorUsuarioContraseña
-                
-                vistaErrorUsuarioContraseñaPrincipal.setLocationRelativeTo(null);
-                vistaErrorUsuarioContraseñaPrincipal.setVisible(true);
-                
-                break;
-                
-            case 6: //Desplegar interfaz de ErrorLlenarCampos principal
-                vistaErrorLlenarCampos.setLocationRelativeTo(null);
-                vistaErrorLlenarCampos.setVisible(true);
-                break;
-            
-            case 7: //Cerrar ventana de notificacion de llenar campos
-                vistaErrorLlenarCampos.setVisible(false);
-                break;
-                
-            case 8: //Desplegar interzas de error en el tipo de dato en el campo cédula
-                vistaErrorCedulaPrincipal.setLocationRelativeTo(null);
-                vistaErrorCedulaPrincipal.setVisible(true);
-                break;
-                
+                      
             //Acá inicia todo el manejo del Jefe de Departamento    
             case 10: //Vista principal (Plazas asignadas)
                 
@@ -211,7 +189,37 @@ public class CtrlPrincipal
             case 29: //App->Salir (Jefe Departamento)
                 
                 CtrlJefeDepartamento.instance().selectOption(101);
-                break;            
+                break;
+                
+                //Aca comienza todo el manejo de coordinador
+            case 40:
+                CtrlCoordinador.instance().selectOption(2);
+                break;
+                
+            case 41:
+                CtrlCoordinador.instance().selectOption(3);
+                break;
+                
+           //Aca comienza todo el manejo de aspirante     
+            case 70:
+                break;
+                
+            //Aca comienza todo el manejo de secretaria escuela
+            case 100:
+                break;
+                
+            //Aca comienza todo el manejo de secretaria departamento
+            case 130:
+                break;
+                
+            //Aca comienza todo el manejo de director de la escuela
+            case 160:
+                break;
+                
+            //Aca comienza todo el manejo de preparador
+            case 190:
+                break;
+                
         }
     }
     

@@ -15,6 +15,7 @@ import Usuario.Preparador.IPreparador;
 import Usuario.SecretariaDepartamento.ISecretariaDepartamento;
 import Usuario.SecretariaEscuela.ISecretariaEscuela;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import oracle.net.aso.i;
 
 /**
@@ -101,16 +102,8 @@ public class CtrlJefeDepartamento {
                     
                     }
                 }else
-                {
-                    CtrlPrincipal.instance().vistaErrorJefe.setLocationRelativeTo(null);
-                    CtrlPrincipal.instance().vistaErrorJefe.setVisible(true);
-                }
-                
-                break;
-                
-            case 5:
-                
-                CtrlPrincipal.instance().vistaErrorJefe.setVisible(false);
+                    JOptionPane.showMessageDialog(null,"Los campos deben ser numéricos");
+
                 
                 break;
                 

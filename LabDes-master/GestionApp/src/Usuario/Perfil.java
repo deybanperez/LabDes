@@ -16,7 +16,9 @@ public class Perfil {
     protected String fecha_nac;
     protected String email;
     protected TipoUsuario tipo;
-    public Perfil(String nombre, String apellido, String cedula, String fecha_nac, String email,TipoUsuario tipo) {
+    
+    public Perfil(String nombre, String apellido, String cedula, String fecha_nac, String email,TipoUsuario tipo)
+    {
         this.nombre = nombre;
         this.apellido = apellido;
         this.cedula = cedula;
@@ -25,52 +27,64 @@ public class Perfil {
         this.tipo = tipo;
     }
 
-    public TipoUsuario getTipo() {
+    public TipoUsuario getTipo()
+    {
         return tipo;
     }
 
-    public void setTipo(TipoUsuario tipo) {
+    public void setTipo(TipoUsuario tipo)
+    {
         this.tipo = tipo;
     }
 
     
-    public String getNombre() {
+    public String getNombre()
+    {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void setNombre(String nombre)
+    {
         this.nombre = nombre;
     }
 
-    public String getApellido() {
+    public String getApellido()
+    {
         return apellido;
     }
 
-    public void setApellido(String apellido) {
+    public void setApellido(String apellido)
+    {
         this.apellido = apellido;
     }
 
-    public String getCedula() {
+    public String getCedula()
+    {
         return cedula;
     }
 
-    public void setCedula(String cedula) {
+    public void setCedula(String cedula)
+    {
         this.cedula = cedula;
     }
 
-    public String getFecha_nac() {
+    public String getFecha_nac()
+    {
         return fecha_nac;
     }
 
-    public void setFecha_nac(String fecha_nac) {
+    public void setFecha_nac(String fecha_nac)
+    {
         this.fecha_nac = fecha_nac;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email)
+    {
         this.email = email;
     }   
     
