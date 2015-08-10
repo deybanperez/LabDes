@@ -20,6 +20,8 @@ public class Aspirante extends Perfil{
         super(nombre, apellido, cedula, fecha_nac, email, tipo);
     }
 
+
+
     public int getCreditos_aprobados() {
         return creditos_aprobados;
     }

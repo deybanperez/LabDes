@@ -6,9 +6,18 @@
 package Usuario.Aspirante;
 
 import Controladores.CtrlPrincipal;
+import Usuario.Coordinador.ICoordinador;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,8 +28,28 @@ public class IAspirante extends javax.swing.JFrame {
     /**
      * Creates new form IAspirante
      */
+    DefaultTableModel modelo;
+     
     public IAspirante() {
         initComponents();
+        modelo = new DefaultTableModel();
+        modelo.addColumn("columna 1");
+        modelo.addColumn("columna 2");
+        modelo.addColumn("columna 3");
+        modelo.addColumn("columna 4");
+        this.tabla_notify.setModel(modelo);
+        
+        String[] datos = new String[4];
+        datos[0] = "prueba1";
+        
+        datos[1] = "prueba1.1";
+        
+        datos[2] = "prueba1.2";
+        
+        datos[3] = "prueba1.3";
+        
+
+        modelo.addRow(datos);
     }
 
     /**
@@ -34,7 +63,11 @@ public class IAspirante extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla_notify = new javax.swing.JTable();
+        btn_salir = new javax.swing.JButton();
+        arch_subido = new javax.swing.JTextField();
+        btn_aceptar1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         MenuBar = new javax.swing.JMenuBar();
         Salir = new javax.swing.JMenu();
         ExitOption = new javax.swing.JMenuItem();
@@ -54,42 +87,62 @@ public class IAspirante extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Notificaciones", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 24))); // NOI18N
         jPanel1.setToolTipText("");
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla_notify.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabla_notify.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabla_notify);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        btn_salir.setText("Salir");
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_salirActionPerformed(evt);
+            }
+        });
+
+        arch_subido.setEditable(false);
+        arch_subido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                arch_subidoActionPerformed(evt);
+            }
+        });
+
+        btn_aceptar1.setText("Aceptar");
+        btn_aceptar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_aceptar1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Archivo Adjunto:");
 
         Salir.setText("App");
         Salir.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
 
         ExitOption.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
-        ExitOption.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        ExitOption.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         ExitOption.setText("Salir");
         ExitOption.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -109,7 +162,7 @@ public class IAspirante extends javax.swing.JFrame {
         jMenu3.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
 
         EditarPerfil.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        EditarPerfil.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        EditarPerfil.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         EditarPerfil.setText("Ver");
         EditarPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,14 +172,14 @@ public class IAspirante extends javax.swing.JFrame {
         jMenu3.add(EditarPerfil);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem4.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        jMenuItem4.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         jMenuItem4.setText("Editar");
         jMenu3.add(jMenuItem4);
 
         MenuBar.add(jMenu3);
 
         jMenu2.setText("Acciones");
-        jMenu2.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        jMenu2.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.SHIFT_MASK));
         jMenuItem1.setText("Llenar planilla");
@@ -139,6 +192,11 @@ public class IAspirante extends javax.swing.JFrame {
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK));
         jMenuItem2.setText("Consignar Recaudos");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_MASK));
@@ -152,6 +210,11 @@ public class IAspirante extends javax.swing.JFrame {
 
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_MASK));
         jMenuItem5.setText("Rechazar Plaza");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem5);
 
         MenuBar.add(jMenu2);
@@ -164,26 +227,58 @@ public class IAspirante extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(arch_subido, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btn_aceptar1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(arch_subido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_salir)
+                    .addComponent(btn_aceptar1))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ExitOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitOptionActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            CtrlPrincipal.instance().selectOption(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_ExitOptionActionPerformed
 
     private void EditarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarPerfilActionPerformed
         // TODO add your handling code here:
+        
+        /*  SE LLAMARA LA INTERFAZ DE IPerfil 
+        Usuario.IPerfil iperfil= new Usuario.IPerfil();
+        iperfil.setVisible(true);
+        this.setVisible(false);
+        
+        */       
+        
+        
     }//GEN-LAST:event_EditarPerfilActionPerformed
 
     private void ExitOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitOptionMouseClicked
@@ -201,7 +296,147 @@ public class IAspirante extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
+        modelo=(DefaultTableModel) tabla_notify.getModel();
+        int filas = tabla_notify.getSelectedRow();
+
+        if (filas >= 0) {
+            //SE ESTA ELIMINANDO LA FILA CON LA OPCION DE QUE SE ACEPTE LA PLAZA
+            
+            String fila_select=(String)modelo.getValueAt(filas, tabla_notify.getSelectedColumn());
+            
+            int confirmar=JOptionPane.showConfirmDialog(null,
+            "Esta seguro de Aceptar la Plaza "+fila_select);
+            
+            if(JOptionPane.OK_OPTION==confirmar){
+                JOptionPane.showMessageDialog(null,"Notificacion creada con Exito");
+                this.arch_subido.setText(null);
+            }
+            
+            //modelo.removeRow(filas);
+        } else {
+            JOptionPane.showMessageDialog(null, "Tabla Vacia o Fila no Seleccionada");// Mesaje de Erros en otra pantalla
+        }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
+        try {
+            // TODO add your handling code here:
+            CtrlPrincipal.instance().selectOption(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_salirActionPerformed
+
+    private void btn_aceptar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptar1ActionPerformed
+        // TODO add your handling code here:
+        int confirmar=JOptionPane.showConfirmDialog(null,
+                "Esta seguro de cargar el siguiente archivo: "+this.arch_subido.getText()); 
+
+        if(JOptionPane.OK_OPTION==confirmar){
+                JOptionPane.showMessageDialog(null,"Archivo subido con Exito ");
+                this.arch_subido.setText(null);
+        }
+    
+        
+    }//GEN-LAST:event_btn_aceptar1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+         String aux="";   
+        String texto="";
+        
+        /**llamamos el metodo que permite cargar la ventana*/
+        JFileChooser file=new JFileChooser();
+        file.showOpenDialog(this);
+        /**abrimos el archivo seleccionado*/
+        File abre=file.getSelectedFile();
+        texto=abre.getName();
+       
+       
+          
+        for (int i=0; i< texto.length(); i++){
+            
+            if (texto.charAt(i)=='.'){
+                
+                if (texto.charAt(i+1)=='p' && texto.charAt(i+2)=='d' && texto.charAt(i+3)=='f'){
+                    this.arch_subido.setText(texto);
+                    break;
+                }else{
+                    JOptionPane.showMessageDialog(null,"" +
+                    "\nEl archivo deber ser un .pdf",
+                            "ADVERTENCIA!!!",JOptionPane.WARNING_MESSAGE);
+                    break;
+                    
+                }
+            
+            }
+        }
+
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        modelo=(DefaultTableModel) tabla_notify.getModel();
+        int filas = tabla_notify.getSelectedRow();
+
+        if (filas >= 0) {
+            //SE ESTA ELIMINANDO LA FILA CON LA OPCION DE QUE SE ACEPTE LA PLAZA
+            
+            String fila_select=(String)modelo.getValueAt(filas, tabla_notify.getSelectedColumn());
+            
+            int confirmar=JOptionPane.showConfirmDialog(null,
+            "Esta seguro de Rechazar la Plaza "+fila_select);
+            
+            if(JOptionPane.OK_OPTION==confirmar){
+                JOptionPane.showMessageDialog(null,"Notificacion creada con Exito");
+                this.arch_subido.setText(null);
+                modelo.removeRow(filas);
+            }
+            
+            //modelo.removeRow(filas);
+        } else {
+            JOptionPane.showMessageDialog(null, "Tabla Vacia o Fila no Seleccionada");// Mesaje de Erros en otra pantalla
+        }
+        
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void arch_subidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arch_subidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_arch_subidoActionPerformed
+/**
+     * @param args the command line arguments
+     */
+    public static void main(String argICoordinadors[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(IAspirante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(IAspirante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(IAspirante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(IAspirante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new IAspirante().setVisible(true);
+            }
+        });
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -209,6 +444,10 @@ public class IAspirante extends javax.swing.JFrame {
     private javax.swing.JMenuItem ExitOption;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JMenu Salir;
+    private javax.swing.JTextField arch_subido;
+    private javax.swing.JButton btn_aceptar1;
+    private javax.swing.JButton btn_salir;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
@@ -218,6 +457,6 @@ public class IAspirante extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabla_notify;
     // End of variables declaration//GEN-END:variables
 }
