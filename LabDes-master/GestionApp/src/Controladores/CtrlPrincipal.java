@@ -200,6 +200,14 @@ public class CtrlPrincipal
                 CtrlCoordinador.instance().selectOption(3);
                 break;
                 
+            case 68:
+                CtrlCoordinador.instance().selectOption(100);
+                break;
+                
+            case 69:
+                CtrlCoordinador.instance().selectOption(101);
+                break;
+                
            //Aca comienza todo el manejo de aspirante     
             case 70:
                 break;

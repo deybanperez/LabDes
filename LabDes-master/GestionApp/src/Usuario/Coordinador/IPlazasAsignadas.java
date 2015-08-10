@@ -6,6 +6,7 @@
 package Usuario.Coordinador;
 
 import Controladores.CtrlPrincipal;
+import Main.IPrincipal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -234,6 +235,12 @@ public class IPlazasAsignadas extends javax.swing.JFrame {
 
     private void ExitOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitOptionActionPerformed
         // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            CtrlPrincipal.instance().selectOption(69);
+        } catch (SQLException ex) {
+            Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ExitOptionActionPerformed
 
     private void generarPlanillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarPlanillaActionPerformed

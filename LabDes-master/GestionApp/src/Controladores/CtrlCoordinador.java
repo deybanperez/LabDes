@@ -54,21 +54,30 @@ public class CtrlCoordinador {
                 CtrlPrincipal.instance().vistaCoordinador.setVisible(true);
             break;
                 
-            case 2:
-                
+            case 2: //Desplegar la interfaz de plazas asignadas desde la ventana principal
                 CtrlPrincipal.instance().vistaCoordinador.setVisible(false);
                 CtrlPrincipal.instance().vistaPlazasAsignadasCoordinador = new IPlazasAsignadas();
                 CtrlPrincipal.instance().vistaPlazasAsignadasCoordinador.setLocationRelativeTo(null);
                 CtrlPrincipal.instance().vistaPlazasAsignadasCoordinador.setVisible(true);
             break;
                 
-            case 3:
+            case 3: //Regersar desde plazas asignadas a la vista principal
                 CtrlPrincipal.instance().vistaPlazasAsignadasCoordinador.setVisible(false);
                 CtrlPrincipal.instance().vistaCoordinador.setLocationRelativeTo(null);
                 CtrlPrincipal.instance().vistaCoordinador.setVisible(true);
+                break;
                 
+            case 100: //Cerrar sesion desde la interafz principal
+                CtrlPrincipal.instance().vistaCoordinador.setVisible(false);
+                CtrlPrincipal.instance().IPpal.setLocationRelativeTo(null);
+                CtrlPrincipal.instance().IPpal.setVisible(true);
+                break;
                 
-            break;
+            case 101: //Cerrar Sesion desde las plazas asignadas
+                CtrlPrincipal.instance().vistaPlazasAsignadasCoordinador.setVisible(false);
+                CtrlPrincipal.instance().IPpal.setLocationRelativeTo(null);
+                CtrlPrincipal.instance().IPpal.setVisible(true);
+                break;
         }
     }    
     
