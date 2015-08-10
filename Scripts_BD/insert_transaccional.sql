@@ -1,14 +1,15 @@
 INSERT INTO MATERIA_SEMESTRE VALUES(6213,'I-2015','IHC',0,2);
 INSERT INTO MATERIA_SEMESTRE VALUES(6243,'I-2015','DAD',0,1);
+INSERT INTO MATERIA_SEMESTRE VALUES(6211,'I-2015','DAD',0,1);
 
 INSERT INTO USUARIO VALUES(123,'admin123','-','-','12/12/90','ADMINISTRADOR','admin@gmail.com');
-INSERT INTO USUARIO VALUES(234,'aspirante123','-','-','12/12/90','ASPIRANTE','aspi@gmail.com');
-INSERT INTO USUARIO VALUES(345,'coordinador123','-','-','12/12/90','COORDINADOR','coordi@gmail.com');
-INSERT INTO USUARIO VALUES(456,'director123','-','-','12/12/90','DIRECTOR','director@gmail.com');
-INSERT INTO USUARIO VALUES(567,'jefe123','-','-','12/12/90','JEFE','jefe@gmail.com');
-INSERT INTO USUARIO VALUES(678,'preparador123','-','-','12/12/90','PREPARADOR','prepa@gmail.com');
-INSERT INTO USUARIO VALUES(789,'secretariaD123','-','-','12/12/90','SECRETARIADEPARTAMENTO','secreD@gmail.com');
-INSERT INTO USUARIO VALUES(899,'secretariaE123','-','-','12/12/90','SECRETARIAECUELA','secreE@gmail.com');
+INSERT INTO USUARIO VALUES(234,'aspirante123','Wilmer','Prieto','12/12/90','ASPIRANTE','aspi@gmail.com');
+INSERT INTO USUARIO VALUES(345,'coordinador123','Pedro','Bonillo','12/12/90','COORDINADOR','coordi@gmail.com');
+INSERT INTO USUARIO VALUES(456,'director123','Robinson','Rivas','12/12/90','DIRECTOR','director@gmail.com');
+INSERT INTO USUARIO VALUES(567,'jefe123','Tina','Divasta','12/12/90','JEFE','jefe@gmail.com');
+INSERT INTO USUARIO VALUES(678,'preparador123','Pedro','Diaz','12/12/90','PREPARADOR','prepa@gmail.com');
+INSERT INTO USUARIO VALUES(789,'secretariaD123','Mariela','Rodriguez','12/12/90','SECRETARIADEPARTAMENTO','secreD@gmail.com');
+INSERT INTO USUARIO VALUES(899,'secretariaE123','Gleidys','Perez','12/12/90','SECRETARIAECUELA','secreE@gmail.com');
 
 INSERT INTO ASPIRANTE VALUES(234,100,0.8);
 

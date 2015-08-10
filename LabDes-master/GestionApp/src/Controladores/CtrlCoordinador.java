@@ -38,9 +38,8 @@ public class CtrlCoordinador {
     
   
     
-    public void selectOption(int opc) throws SQLException{
-    
-    
+    public void selectOption(int opc) throws SQLException
+    {
         switch(opc){
             case 0:
                 System.exit(0);
