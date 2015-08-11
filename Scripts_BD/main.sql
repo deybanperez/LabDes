@@ -15,8 +15,7 @@ a la ubicación física dentro de su equipo
 */
 
 CONNECT TRANS/TRANS123;
---@'C:/BD/cre_transaccional.sql'
-
---@'C:/BD/insrt_transaccional.sql'
+@'C:/BD/cre_transaccional.sql'
+@'C:/BD/insert_transaccional.sql'
 
 COMMIT;

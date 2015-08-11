@@ -102,56 +102,62 @@ public class CtrlPrincipal
                                 if(passwd.equals(auxRset.getString(1)))
                                 {
                                     tipoUsuario = auxRset.getString(2);
+                                    if(tipoUsuario!=null)
+                                    {    
+                                        switch(tipoUsuario)
+                                        {
+                                            case "ADMINISTRADOR":
+                                                System.out.println("Soy el admin");
+                                                break;
+                                            case "ASPIRANTE":
+                                                CtrlAspirante.instance().selectOption(1);                                
+                                                break;
+                                            case "COORDINADOR":
 
-                                    switch(tipoUsuario){
-                                        case "ADMINISTRADOR":
-                                            System.out.println("Soy el admin");
+                                                String nombre, apellido, cedula, email;
+
+                                                ctrlBD.SetQuery("SELECT * FROM USUARIO WHERE CEDULA ='"+user+"'");
+                                                auxRset=ctrlBD.GetQuery();
+
+                                                if(auxRset.next())
+
+                                                {
+                                                    nombre = auxRset.getString(3);
+                                                    apellido = auxRset.getString(4);
+                                                    cedula = auxRset.getString(1);
+                                                    email = auxRset.getString(7);
+                                                    sesionCoordinador = new Coordinador(nombre, apellido, cedula, null, email,TipoUsuario.COORDINADOR);
+                                                    CtrlCoordinador.instance().selectOption(1);
+                                                }
+
+                                                 break;
+                                            case "DIRECTORESCUELA":
+                                                CtrlDirectorEscuela.instance().selectOption(1);
                                             break;
-                                        case "ASPIRANTE":
-                                            CtrlAspirante.instance().selectOption(1);                                
+                                            case "JEFE":
+                                                CtrlJefeDepartamento.instance().selectOption(1);
+                                                break;
+                                            case "PREPARADOR":
+                                                CtrlPreparador.instance().selectOption(1);
+                                                break;
+                                            case "SECRETARIADEPARTAMENTO":
+                                                CtrlSecretariaDepartamento.instance().selectOption(1);
                                             break;
-                                        case "COORDINADOR":
-                                            
-                                            String nombre, apellido, cedula, email;
-                                            
-                                            ctrlBD.SetQuery("SELECT * FROM USUARIO WHERE CEDULA ='"+user+"'");
-                                            auxRset=ctrlBD.GetQuery();
-                                            
-                                            if(auxRset.next())
-                                                
-                                            {
-                                                nombre = auxRset.getString(3);
-                                                apellido = auxRset.getString(4);
-                                                cedula = auxRset.getString(1);
-                                                email = auxRset.getString(7);
-                                                sesionCoordinador = new Coordinador(nombre, apellido, cedula, null, email,TipoUsuario.COORDINADOR);
-                                                CtrlCoordinador.instance().selectOption(1);
-                                            }
-                                             
-                                             break;
-                                        case "DIRECTORESCUELA":
-                                            CtrlDirectorEscuela.instance().selectOption(1);
-                                        break;
-                                        case "JEFE":
-                                            CtrlJefeDepartamento.instance().selectOption(1);
-                                            break;
-                                        case "PREPARADOR":
-                                            CtrlPreparador.instance().selectOption(1);
-                                            break;
-                                        case "SECRETARIADEPARTAMENTO":
-                                            CtrlSecretariaDepartamento.instance().selectOption(1);
-                                        break;
-                                        case "SECRETARIAESCUELA":
-                                            CtrlSecretariaEscuela.instance().selectOption(1);
-                                            break;
-                                        default:
-                                            System.out.println("tipo de usuario no valido");
-                                            break;
+                                            case "SECRETARIAESCUELA":
+                                                CtrlSecretariaEscuela.instance().selectOption(1);
+                                                break;
+                                            default:
+                                                System.out.println("tipo de usuario no valido");
+                                                break;
+                                        }
                                     }
+
                                 }else
                                     JOptionPane.showMessageDialog(null, "Usuario o contraseña inválidos");
                             }else
                                 JOptionPane.showMessageDialog(null, "Usuario o contraseña inválidos");
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
                         }
                     }else
                         JOptionPane.showMessageDialog(null, "El tipo de dato cédula debe ser numérico");
