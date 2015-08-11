@@ -54,19 +54,13 @@ public class CtrlCoordinador {
                 CtrlPrincipal.instance().vistaCoordinador.setVisible(true);
             break;
                 
-<<<<<<< HEAD
-            case 2: //Desplegar la interfaz de plazas asignadas desde la ventana principal
-=======
             case 2:
-                
->>>>>>> Pedro
                 CtrlPrincipal.instance().vistaCoordinador.setVisible(false);
                 CtrlPrincipal.instance().vistaPlazasAsignadasCoordinador = new IPlazasAsignadas();
                 CtrlPrincipal.instance().vistaPlazasAsignadasCoordinador.setLocationRelativeTo(null);
                 CtrlPrincipal.instance().vistaPlazasAsignadasCoordinador.setVisible(true);
             break;
                 
-<<<<<<< HEAD
             case 3: //Regersar desde plazas asignadas a la vista principal
                 CtrlPrincipal.instance().vistaPlazasAsignadasCoordinador.setVisible(false);
                 CtrlPrincipal.instance().vistaCoordinador.setLocationRelativeTo(null);
@@ -102,15 +96,7 @@ public class CtrlCoordinador {
                 CtrlPrincipal.instance().vistaPublicarConcurso.setVisible(false);
                 CtrlPrincipal.instance().IPpal.setLocationRelativeTo(null);
                 CtrlPrincipal.instance().IPpal.setVisible(true);
-=======
-            case 3:
-                CtrlPrincipal.instance().vistaPlazasAsignadasCoordinador.setVisible(false);
-                CtrlPrincipal.instance().vistaCoordinador.setLocationRelativeTo(null);
-                CtrlPrincipal.instance().vistaCoordinador.setVisible(true);
-                
-                
-            break;
->>>>>>> Pedro
+
         }
     }    
     

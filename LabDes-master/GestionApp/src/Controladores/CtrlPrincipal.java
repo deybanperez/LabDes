@@ -207,7 +207,6 @@ public class CtrlPrincipal
                 CtrlCoordinador.instance().selectOption(3);
                 break;
                 
-<<<<<<< HEAD
             case 42:
                 CtrlCoordinador.instance().selectOption(4);
                 break;
@@ -231,8 +230,6 @@ public class CtrlPrincipal
                 CtrlCoordinador.instance().selectOption(101);
                 break;
                 
-=======
->>>>>>> Pedro
            //Aca comienza todo el manejo de aspirante     
             case 70:
                 break;
