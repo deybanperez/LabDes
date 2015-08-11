@@ -9,6 +9,7 @@ import Main.IPrincipal;
 import Usuario.Aspirante.IAspirante;
 import Usuario.Coordinador.ICoordinador;
 import Usuario.Coordinador.IPlazasAsignadas;
+import Usuario.Coordinador.IPublicarConcurso;
 import Usuario.DirectorEscuela.IDirectorEscuela;
 import Usuario.JefeDepartamento.IAsignarPlazas;
 import Usuario.JefeDepartamento.IJefeDepartamento;
@@ -66,6 +67,19 @@ public class CtrlCoordinador {
                 CtrlPrincipal.instance().vistaCoordinador.setVisible(true);
                 break;
                 
+            case 4:
+                CtrlPrincipal.instance().vistaCoordinador.setVisible(false);
+                CtrlPrincipal.instance().vistaPublicarConcurso = new IPublicarConcurso();
+                CtrlPrincipal.instance().vistaPublicarConcurso.setLocationRelativeTo(null);
+                CtrlPrincipal.instance().vistaPublicarConcurso.setVisible(true);
+                break;
+                
+            case 5:
+                 CtrlPrincipal.instance().vistaPublicarConcurso.setVisible(false);
+                 CtrlPrincipal.instance().vistaCoordinador.setLocationRelativeTo(null);
+                 CtrlPrincipal.instance().vistaCoordinador.setVisible(true);
+                break;
+                
             case 100: //Cerrar sesion desde la interafz principal
                 CtrlPrincipal.instance().vistaCoordinador.setVisible(false);
                 CtrlPrincipal.instance().IPpal.setLocationRelativeTo(null);
@@ -77,6 +91,11 @@ public class CtrlCoordinador {
                 CtrlPrincipal.instance().IPpal.setLocationRelativeTo(null);
                 CtrlPrincipal.instance().IPpal.setVisible(true);
                 break;
+                
+            case 102:
+                CtrlPrincipal.instance().vistaPublicarConcurso.setVisible(false);
+                CtrlPrincipal.instance().IPpal.setLocationRelativeTo(null);
+                CtrlPrincipal.instance().IPpal.setVisible(true);
         }
     }    
     

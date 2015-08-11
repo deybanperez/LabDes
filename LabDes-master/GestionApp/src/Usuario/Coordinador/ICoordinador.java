@@ -245,7 +245,12 @@ public class ICoordinador extends javax.swing.JFrame {
     }//GEN-LAST:event_generarPlanillaActionPerformed
 
     private void publicarConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicarConcursoActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            CtrlPrincipal.instance().selectOption(42);
+        } catch (SQLException ex) {
+            Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_publicarConcursoActionPerformed
 
     private void visualizarPlazasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarPlazasActionPerformed
