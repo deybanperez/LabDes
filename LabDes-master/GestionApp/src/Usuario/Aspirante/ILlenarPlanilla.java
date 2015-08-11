@@ -9,6 +9,7 @@ import Controladores.CtrlPrincipal;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextField;
 
 /**
  *
@@ -34,19 +35,19 @@ public class ILlenarPlanilla extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        names = new javax.swing.JTextField();
+        label_names = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        ci = new javax.swing.JTextField();
+        label_ci = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        lugarnacimiento = new javax.swing.JTextField();
+        label_lugarnacimiento = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        fechanac = new javax.swing.JTextField();
+        label_fechanac = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        edad = new javax.swing.JTextField();
+        label_edad = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        nacionalidad = new javax.swing.JTextField();
+        label_nacionalidad = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        boxsexo = new javax.swing.JComboBox();
+        box_sexo = new javax.swing.JComboBox();
         submit = new javax.swing.JButton();
         back = new javax.swing.JButton();
         MenuBar = new javax.swing.JMenuBar();
@@ -68,58 +69,58 @@ public class ILlenarPlanilla extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre y Apellidos:");
 
-        names.addActionListener(new java.awt.event.ActionListener() {
+        label_names.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                namesActionPerformed(evt);
+                label_namesActionPerformed(evt);
             }
         });
 
         jLabel2.setText("Cedula:");
 
-        ci.addActionListener(new java.awt.event.ActionListener() {
+        label_ci.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ciActionPerformed(evt);
+                label_ciActionPerformed(evt);
             }
         });
 
         jLabel3.setText("Lugar de nacimiento:");
 
-        lugarnacimiento.addActionListener(new java.awt.event.ActionListener() {
+        label_lugarnacimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lugarnacimientoActionPerformed(evt);
+                label_lugarnacimientoActionPerformed(evt);
             }
         });
 
         jLabel4.setText("Fecha de Nacimiento:");
 
-        fechanac.addActionListener(new java.awt.event.ActionListener() {
+        label_fechanac.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fechanacActionPerformed(evt);
+                label_fechanacActionPerformed(evt);
             }
         });
 
         jLabel5.setText("Edad");
 
-        edad.addActionListener(new java.awt.event.ActionListener() {
+        label_edad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edadActionPerformed(evt);
+                label_edadActionPerformed(evt);
             }
         });
 
         jLabel6.setText("Nacionalidad");
 
-        nacionalidad.addActionListener(new java.awt.event.ActionListener() {
+        label_nacionalidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nacionalidadActionPerformed(evt);
+                label_nacionalidadActionPerformed(evt);
             }
         });
 
         jLabel7.setText("Sexo");
 
-        boxsexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Femenino", "Masculino" }));
-        boxsexo.addActionListener(new java.awt.event.ActionListener() {
+        box_sexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Femenino", "Masculino" }));
+        box_sexo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boxsexoActionPerformed(evt);
+                box_sexoActionPerformed(evt);
             }
         });
 
@@ -147,39 +148,35 @@ public class ILlenarPlanilla extends javax.swing.JFrame {
                     .addComponent(submit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel4)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel6))
-                                    .addGap(15, 15, 15)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(nacionalidad, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                                        .addComponent(fechanac)
-                                        .addComponent(boxsexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel7)
-                                    .addComponent(edad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(names, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(85, 85, 85)
-                                        .addComponent(ci, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(label_nacionalidad)
+                                    .addComponent(box_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_edad, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(22, 22, 22)
-                                .addComponent(lugarnacimiento)))
-                        .addGap(0, 30, Short.MAX_VALUE)))
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                                .addComponent(label_names, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, Short.MAX_VALUE)
+                                .addComponent(label_fechanac, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(label_lugarnacimiento)
+                                    .addComponent(label_ci, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))))
+                        .addGap(0, 30, Short.MAX_VALUE))
+                    .addComponent(back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,39 +184,36 @@ public class ILlenarPlanilla extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(names, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(label_names, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(label_ci, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ci, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(13, 13, 13)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(lugarnacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_lugarnacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
-                    .addComponent(fechanac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(label_fechanac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(edad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(label_edad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(nacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(boxsexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(label_nacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(box_sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addGap(27, 27, 27)
                 .addComponent(submit)
-                .addContainerGap(33, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(318, Short.MAX_VALUE)
-                    .addComponent(back)
-                    .addGap(5, 5, 5)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(back)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         Salir.setText("App");
@@ -317,41 +311,41 @@ public class ILlenarPlanilla extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(24, 24, 24)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void namesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namesActionPerformed
+    private void label_namesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_label_namesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_namesActionPerformed
+    }//GEN-LAST:event_label_namesActionPerformed
 
-    private void ciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ciActionPerformed
+    private void label_ciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_label_ciActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ciActionPerformed
+    }//GEN-LAST:event_label_ciActionPerformed
 
-    private void lugarnacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lugarnacimientoActionPerformed
+    private void label_lugarnacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_label_lugarnacimientoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lugarnacimientoActionPerformed
+    }//GEN-LAST:event_label_lugarnacimientoActionPerformed
 
-    private void fechanacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechanacActionPerformed
+    private void label_fechanacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_label_fechanacActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fechanacActionPerformed
+    }//GEN-LAST:event_label_fechanacActionPerformed
 
-    private void edadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edadActionPerformed
+    private void label_edadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_label_edadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_edadActionPerformed
+    }//GEN-LAST:event_label_edadActionPerformed
 
-    private void nacionalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nacionalidadActionPerformed
+    private void label_nacionalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_label_nacionalidadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nacionalidadActionPerformed
+    }//GEN-LAST:event_label_nacionalidadActionPerformed
 
-    private void boxsexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxsexoActionPerformed
+    private void box_sexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_box_sexoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_boxsexoActionPerformed
+    }//GEN-LAST:event_box_sexoActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
@@ -390,40 +384,57 @@ public class ILlenarPlanilla extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_backActionPerformed
 
+    public String getLabel_ci() {
+        return label_ci.getText();
+    }
+
+    public void setLabel_ci(String label_ci) {
+        this.label_ci.setText(label_ci);
+    }
+
+    public String getLabel_edad() {
+        return label_edad.getText();
+    }
+
+    public void setLabel_edad(String label_edad) {
+        this.label_edad.setText(label_edad);
+    }
+
+    public String getLabel_fechanac() {
+        return label_fechanac.getText();
+    }
+
+    public void setLabel_fechanac(String label_fechanac) {
+        this.label_fechanac.setText(label_fechanac);
+    }
+
+    public String getLabel_lugarnacimiento() {
+        return label_lugarnacimiento.getText();
+    }
+
+    public void setLabel_lugarnacimiento(String label_lugarnacimiento) {
+        this.label_lugarnacimiento.setText(label_lugarnacimiento);
+    }
+
+    public String getLabel_nacionalidad() {
+        return label_nacionalidad.getText();
+    }
+
+    public void setLabel_nacionalidad(String label_nacionalidad) {
+        this.label_nacionalidad.setText(label_nacionalidad);
+    }
+
+    public String getLabel_names() {
+        return label_names.getText();
+    }
+
+    public void setLabel_names(String label_names) {
+        this.label_names.setText(label_names);
+    }
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ILlenarPlanilla.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ILlenarPlanilla.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ILlenarPlanilla.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ILlenarPlanilla.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ILlenarPlanilla().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem EditarPerfil;
@@ -431,10 +442,7 @@ public class ILlenarPlanilla extends javax.swing.JFrame {
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JMenu Salir;
     private javax.swing.JButton back;
-    private javax.swing.JComboBox boxsexo;
-    private javax.swing.JTextField ci;
-    private javax.swing.JTextField edad;
-    private javax.swing.JTextField fechanac;
+    private javax.swing.JComboBox box_sexo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -451,9 +459,12 @@ public class ILlenarPlanilla extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField lugarnacimiento;
-    private javax.swing.JTextField nacionalidad;
-    private javax.swing.JTextField names;
+    private javax.swing.JTextField label_ci;
+    private javax.swing.JTextField label_edad;
+    private javax.swing.JTextField label_fechanac;
+    private javax.swing.JTextField label_lugarnacimiento;
+    private javax.swing.JTextField label_nacionalidad;
+    private javax.swing.JTextField label_names;
     private javax.swing.JButton submit;
     // End of variables declaration//GEN-END:variables
 }
