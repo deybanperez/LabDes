@@ -55,8 +55,8 @@ public class IAsignarPlazas extends javax.swing.JFrame {
                 fila++;
             }
         
-            idMateria.setHorizontalAlignment(JTextField.CENTER);
-            nombreMateria.setHorizontalAlignment(JTextField.CENTER);
+            idMateria.setHorizontalAlignment(JTextField.CENTER); 
+           nombreMateria.setHorizontalAlignment(JTextField.CENTER);
             semestreMateria.setHorizontalAlignment(JTextField.CENTER);
             cantidadPreparadoresI.setHorizontalAlignment(JTextField.CENTER);
             cantidadPreparadoresII.setHorizontalAlignment(JTextField.CENTER);
