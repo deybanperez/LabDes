@@ -7,6 +7,7 @@ package Controladores;
 
 import Main.IPrincipal;
 import Usuario.Aspirante.IAspirante;
+import Usuario.Aspirante.ILlenarPlanilla;
 import Usuario.Coordinador.ICoordinador;
 import Usuario.DirectorEscuela.IDirectorEscuela;
 import Usuario.JefeDepartamento.IAsignarPlazas;
@@ -23,9 +24,11 @@ import java.sql.SQLException;
 public class CtrlAspirante 
 {
     private static CtrlAspirante uniqueInstance = null;
+    public ILlenarPlanilla ILlenarPlanilla;
     
     private CtrlAspirante() throws SQLException{
         uniqueInstance = this;
+        ILlenarPlanilla = new ILlenarPlanilla();
     }
     
     public static CtrlAspirante instance() throws SQLException{//Al referirse a este controlador, invocarlo por este metodo
@@ -52,6 +55,13 @@ public class CtrlAspirante
                 CtrlPrincipal.instance().IPpal.setVisible(false);
 
             break;
+                
+            case 2: //Click LlenarPlanilla IAspirante
+               ILlenarPlanilla.setLocationRelativeTo(null);
+               ILlenarPlanilla.setVisible(true);
+               CtrlPrincipal.instance().vistaAspirante.setVisible(false);
+            break;    
+            
         }
     }    
     
