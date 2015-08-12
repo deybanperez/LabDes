@@ -7,6 +7,7 @@ package Controladores;
 
 import BD.CtrlBD;
 import Main.IPrincipal;
+import Usuario.Aspirante.Aspirante;
 import Usuario.Aspirante.IAspirante;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import Usuario.Preparador.*;
 import Usuario.SecretariaDepartamento.*;
 import Usuario.SecretariaEscuela.*;
 import Usuario.TipoUsuario;
+import java.sql.Array;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,6 +39,7 @@ public class CtrlPrincipal
     public IAspirante vistaAspirante;
     public CtrlBD ctrlBD = new CtrlBD();
     public Coordinador sesionCoordinador;
+    public Aspirante sesionAspirante;
     public IPlazasAsignadas vistaPlazasAsignadasCoordinador;
     public Usuario.Coordinador.IPublicarConcurso vistaPublicarConcurso;
     
@@ -83,7 +86,10 @@ public class CtrlPrincipal
             break;
                 
             case 2://click btn-login
+                
                 String passwd, tipoUsuario;
+                String nombre, apellido, cedula, email,fecha_nac;
+
                 int user;
                 ResultSet auxRset;
                   
@@ -111,15 +117,29 @@ public class CtrlPrincipal
                                                 System.out.println("Soy el admin");
                                                 break;
                                             case "ASPIRANTE":
-                                                CtrlAspirante.instance().selectOption(1);                                
-                                                break;
-                                            case "COORDINADOR":
-
-                                                String nombre, apellido, cedula, email;
 
                                                 ctrlBD.SetQuery("SELECT * FROM USUARIO WHERE CEDULA ='"+user+"'");
                                                 auxRset=ctrlBD.GetQuery();
 
+                                                int x = auxRset.getFetchSize();
+                                                if(auxRset.next())
+
+                                                {
+                                                    nombre = auxRset.getString(3);
+                                                    apellido = auxRset.getString(4);
+                                                    cedula = auxRset.getString(1);
+                                                    fecha_nac = auxRset.getString(5);
+                                                    email = auxRset.getString(6);
+                                                    this.sesionAspirante = new Aspirante(nombre, apellido, cedula, fecha_nac, email,TipoUsuario.ASPIRANTE);
+                                                  
+                                                }
+                                          
+                                                CtrlAspirante.instance().selectOption(1);                                
+                                                break;
+                                            case "COORDINADOR":
+
+                                                ctrlBD.SetQuery("SELECT * FROM USUARIO WHERE CEDULA ='"+user+"'");
+                                                auxRset=ctrlBD.GetQuery();
                                                 if(auxRset.next())
 
                                                 {

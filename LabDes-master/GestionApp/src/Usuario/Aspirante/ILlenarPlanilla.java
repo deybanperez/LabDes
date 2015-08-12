@@ -5,6 +5,7 @@
  */
 package Usuario.Aspirante;
 
+import Controladores.CtrlAspirante;
 import Controladores.CtrlPrincipal;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -378,10 +379,22 @@ public class ILlenarPlanilla extends javax.swing.JFrame {
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            CtrlAspirante.instance().selectOption(4);
+        } catch (Exception ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        }        
     }//GEN-LAST:event_submitActionPerformed
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
+                try {
+            // TODO add your handling code here:
+            CtrlAspirante.instance().selectOption(4);
+        } catch (Exception ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_backActionPerformed
 
     public String getLabel_ci() {
@@ -431,6 +444,18 @@ public class ILlenarPlanilla extends javax.swing.JFrame {
     public void setLabel_names(String label_names) {
         this.label_names.setText(label_names);
     }
+    public String getBox_Sexo() {
+        String x = String.valueOf(this.box_sexo.getSelectedItem());
+         return x;
+    }
+
+    public void setBox_Sexo(String sexo) {
+        if(sexo.equalsIgnoreCase("Femenino"))
+            this.box_sexo.setSelectedIndex(1);
+        else
+            this.box_sexo.setSelectedIndex(2);
+
+    }    
 
     /**
      * @param args the command line arguments
