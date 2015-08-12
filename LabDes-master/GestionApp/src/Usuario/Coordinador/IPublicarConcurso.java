@@ -14,6 +14,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -43,36 +44,37 @@ public class IPublicarConcurso extends javax.swing.JFrame {
         fechaFin.setHorizontalAlignment(JTextField.CENTER);
         preparadoresI.setHorizontalAlignment(JTextField.CENTER);
         preparadoresII.setHorizontalAlignment(JTextField.CENTER);
-        ((JLabel)estados.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
-        CtrlPrincipal.instance().ctrlBD.SetQuery("SELECT MS.ID_MATERIA,MS.SEMESTRE,MS.NOMBRE_MATERIA FROM MATERIA_SEMESTRE MS, COORDINADOR C WHERE MS.ID_MATERIA = C.ID_MATERIA AND MS.SEMESTRE = C.SEMESTRE AND C.CEDULA ="+CtrlPrincipal.instance().sesionCoordinador.getCedula());        
+        CtrlPrincipal.instance().ctrlBD.SetQuery("SELECT MS.ID_MATERIA,MS.SEMESTRE,MS.NOMBRE_MATERIA, MS.CANT_PLAZAS_PI, MS.CANT_PLAZAS_PII FROM MATERIA_SEMESTRE MS, COORDINADOR C WHERE MS.ID_MATERIA = C.ID_MATERIA AND MS.SEMESTRE = C.SEMESTRE AND C.CEDULA ="+CtrlPrincipal.instance().sesionCoordinador.getCedula());        
         ResultSet auxRset = CtrlPrincipal.instance().ctrlBD.GetQuery();
      
         while (auxRset.next())
         {
-        model = (DefaultTableModel) tablaNotificaciones.getModel();
-                model.addRow(new Vector());
-                this.tablaNotificaciones.setValueAt(auxRset.getString(1), fila, columna++);
-                this.tablaNotificaciones.setValueAt(auxRset.getString(2), fila, columna++);
-                this.tablaNotificaciones.setValueAt(auxRset.getString(3), fila, columna++);            
-                /*this.tablaNotificaciones.setValueAt(auxRset.getString(4), fila, columna++);
-                this.tablaNotificaciones.setValueAt(auxRset.getString(5), fila, columna++);
-                this.tablaNotificaciones.setValueAt(auxRset.getString(6), fila, columna++);
-                this.tablaNotificaciones.setValueAt(auxRset.getString(7), fila, columna++);*/
-                columna=0;
-                fila++;
+            model= (DefaultTableModel) tablaNotificaciones.getModel();
+            model.addRow(new Vector());
+            tablaNotificaciones.setValueAt(auxRset.getString(1), fila, columna++);
+            tablaNotificaciones.setValueAt(auxRset.getString(2), fila, columna++);
+            tablaNotificaciones.setValueAt(auxRset.getString(3), fila, columna++);
+            tablaNotificaciones.setValueAt(auxRset.getString(4), fila, columna++);
+            tablaNotificaciones.setValueAt(auxRset.getString(5), fila, columna++);
+            columna=0;
+            fila++;
         }
         
 
-            for(int i = 0; i < this.tablaNotificaciones.getColumnCount(); i++)
-                this.tablaNotificaciones.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-            
+        //jLabel1.setText("Usuario: "+CtrlPrincipal.instance().sesionCoordinador.getNombre()+" "+CtrlPrincipal.instance().sesionCoordinador.getApellido());
+        //centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+               
+        for(int i = 0; i < this.tablaNotificaciones.getColumnCount(); i++)
+            this.tablaNotificaciones.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        
         if(this.tablaNotificaciones.getRowCount() > 0 )
             {
                 this.codigo.setText(this.tablaNotificaciones.getModel().getValueAt(0,0).toString());
                 this.semestre.setText(this.tablaNotificaciones.getModel().getValueAt(0,1).toString());
                 this.nombre.setText(this.tablaNotificaciones.getModel().getValueAt(0,2).toString());
+                this.preparadoresI.setText(this.tablaNotificaciones.getModel().getValueAt(0,3).toString());
+                this.preparadoresII.setText(this.tablaNotificaciones.getModel().getValueAt(0,4).toString());
             }
-        
     }
 
     /**
@@ -94,7 +96,6 @@ public class IPublicarConcurso extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         codigo = new javax.swing.JTextField();
         semestre = new javax.swing.JTextField();
         nombre = new javax.swing.JTextField();
@@ -102,7 +103,6 @@ public class IPublicarConcurso extends javax.swing.JFrame {
         fechaFin = new javax.swing.JTextField();
         preparadoresI = new javax.swing.JTextField();
         preparadoresII = new javax.swing.JTextField();
-        estados = new javax.swing.JComboBox();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         MenuBar = new javax.swing.JMenuBar();
@@ -129,10 +129,14 @@ public class IPublicarConcurso extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Semestre", "Nombre", "Fecha Inicio", "Fecha Fin", "Cantidad Preparadores I", "Cantidad PReparadores II", "Estado"
+                "Código", "Semestre", "Nombre", "Cantidad Preparadores I", "Cantidad Preparadores II"
             }
         ));
-        tablaNotificaciones.setEnabled(false);
+        tablaNotificaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaNotificacionesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaNotificaciones);
 
         lCodigo.setText("Código:");
@@ -149,35 +153,42 @@ public class IPublicarConcurso extends javax.swing.JFrame {
 
         jLabel7.setText("Preparadores II:");
 
-        jLabel9.setText("Estado:");
-
         codigo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        codigo.setText("jTextField1");
+        codigo.setToolTipText("");
         codigo.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         codigo.setEnabled(false);
 
         semestre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        semestre.setText("jTextField1");
         semestre.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         semestre.setEnabled(false);
 
         nombre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        nombre.setText("jTextField1");
         nombre.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         nombre.setEnabled(false);
+        nombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreActionPerformed(evt);
+            }
+        });
 
+        fechaInicio.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         fechaInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fechaInicioActionPerformed(evt);
             }
         });
 
-        estados.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Abierto", "Cerrado" }));
-        estados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                estadosActionPerformed(evt);
-            }
-        });
+        fechaFin.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+
+        preparadoresI.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        preparadoresI.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        preparadoresI.setEnabled(false);
+        preparadoresI.setSelectionColor(new java.awt.Color(0, 0, 0));
+
+        preparadoresII.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        preparadoresII.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        preparadoresII.setEnabled(false);
+        preparadoresII.setSelectionColor(new java.awt.Color(0, 0, 0));
 
         jButton2.setText("Volver");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -187,6 +198,11 @@ public class IPublicarConcurso extends javax.swing.JFrame {
         });
 
         jButton3.setText("Enviar");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -201,88 +217,93 @@ public class IPublicarConcurso extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(preparadoresII))
+                            .addComponent(jScrollPane1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(lCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(39, 39, 39))
+                                        .addGap(61, 61, 61))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(27, 27, 27))
+                                        .addGap(49, 49, 49))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(39, 39, 39))
+                                        .addGap(61, 61, 61))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(129, 129, 129))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(133, 133, 133))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(15, 15, 15))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(26, 26, 26))
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(22, 22, 22)
+                                        .addGap(110, 110, 110)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nombre)
-                                    .addComponent(fechaInicio)
-                                    .addComponent(fechaFin)
                                     .addComponent(preparadoresI)
                                     .addComponent(semestre)
-                                    .addComponent(codigo)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(61, 61, 61)
-                                .addComponent(estados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(151, 151, 151))))
+                                    .addComponent(codigo)
+                                    .addComponent(fechaInicio)
+                                    .addComponent(preparadoresII)
+                                    .addComponent(fechaFin))
+                                .addGap(115, 115, 115)))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lCodigo)
-                            .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(semestre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5))
-                    .addComponent(fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addComponent(lCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(semestre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(preparadoresI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(preparadoresII, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(estados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(91, 91, 91)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
                 .addGap(64, 64, 64)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -430,10 +451,6 @@ public class IPublicarConcurso extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_notificarGanadorActionPerformed
 
-    private void estadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_estadosActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try {
@@ -459,6 +476,31 @@ public class IPublicarConcurso extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaInicioActionPerformed
 
+    private void nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreActionPerformed
+
+    private void tablaNotificacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaNotificacionesMouseClicked
+        // TODO add your handling code here:
+        try
+        {
+            int row = tablaNotificaciones.getSelectedRow();
+            
+            codigo.setText(tablaNotificaciones.getModel().getValueAt(row, 0).toString());
+            semestre.setText(tablaNotificaciones.getModel().getValueAt(row, 1).toString());
+            nombre.setText(tablaNotificaciones.getModel().getValueAt(row, 2).toString());
+            preparadoresI.setText(tablaNotificaciones.getModel().getValueAt(row, 3).toString()); 
+            preparadoresII.setText(tablaNotificaciones.getModel().getValueAt(row, 4).toString());
+        }catch(Exception e)
+        {  
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_tablaNotificacionesMouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem ExitOption;
@@ -469,7 +511,6 @@ public class IPublicarConcurso extends javax.swing.JFrame {
     private javax.swing.JTextField codigo;
     private javax.swing.JMenuItem completarPerfilAspirante;
     private javax.swing.JMenuItem enviarSolicitud;
-    private javax.swing.JComboBox estados;
     private javax.swing.JMenuItem evaluarDcoumento;
     private javax.swing.JTextField fechaFin;
     private javax.swing.JTextField fechaInicio;
@@ -482,7 +523,6 @@ public class IPublicarConcurso extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lCodigo;
@@ -495,4 +535,40 @@ public class IPublicarConcurso extends javax.swing.JFrame {
     private javax.swing.JTable tablaNotificaciones;
     private javax.swing.JMenuItem visualizarPlazas;
     // End of variables declaration//GEN-END:variables
+
+
+    public int getIDMateria()
+    {
+        return Integer.parseInt(codigo.getText());
+    }
+    
+    public String getNombreMateria()
+    {
+        return nombre.getText();
+    }
+    
+    public String getSemestre()
+    {
+        return semestre.getText();
+    }
+    
+    public String getCantidadPreparadoresI()
+    {
+        return preparadoresI.getText();
+    }
+    
+    public String getCantidadPreparadoresII()
+    {
+        return preparadoresII.getText();
+    }
+    
+    public String getFechaInicio()
+    {
+        return fechaInicio.getText();
+    }
+    
+    public String getFechafin()
+    {
+        return fechaFin.getText();
+    }
 }

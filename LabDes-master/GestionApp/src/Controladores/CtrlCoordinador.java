@@ -17,6 +17,7 @@ import Usuario.Preparador.IPreparador;
 import Usuario.SecretariaDepartamento.ISecretariaDepartamento;
 import Usuario.SecretariaEscuela.ISecretariaEscuela;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,6 +26,7 @@ import java.sql.SQLException;
 public class CtrlCoordinador {
 
     private static CtrlCoordinador uniqueInstance = null;
+    public String fecha_inicio;
     
     private CtrlCoordinador() throws SQLException{
         uniqueInstance = this;
@@ -76,8 +78,23 @@ public class CtrlCoordinador {
                 
             case 5:
                  CtrlPrincipal.instance().vistaPublicarConcurso.setVisible(false);
+                 CtrlPrincipal.instance().vistaCoordinador = new ICoordinador();
                  CtrlPrincipal.instance().vistaCoordinador.setLocationRelativeTo(null);
                  CtrlPrincipal.instance().vistaCoordinador.setVisible(true);
+                break;
+                
+            case 6:
+                
+                //Falta hacer las validaciones
+                
+                int id_materia = CtrlPrincipal.instance().vistaPublicarConcurso.getIDMateria();
+                fecha_inicio = CtrlPrincipal.instance().vistaPublicarConcurso.getFechafin();
+                if(CtrlPrincipal.instance().ctrlBD.SetQuery("INSERT INTO CONCURSO VALUES ("+10+",'Abierto',"+id_materia+",'"+CtrlPrincipal.instance().vistaPublicarConcurso.getSemestre()+"',"+CtrlPrincipal.instance().sesionCoordinador.getCedula()+",'"+CtrlPrincipal.instance().vistaPublicarConcurso.getFechaInicio()+"','"+CtrlPrincipal.instance().vistaPublicarConcurso.getFechafin()+"')"))
+                {
+                    
+         
+                }else
+                    JOptionPane.showMessageDialog(null,"error");
                 break;
                 
             case 100: //Cerrar sesion desde la interafz principal
