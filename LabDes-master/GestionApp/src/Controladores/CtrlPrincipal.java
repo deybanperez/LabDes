@@ -123,18 +123,17 @@ public class CtrlPrincipal
 
                                                 int x = auxRset.getFetchSize();
                                                 if(auxRset.next())
-
                                                 {
                                                     nombre = auxRset.getString(3);
                                                     apellido = auxRset.getString(4);
                                                     cedula = auxRset.getString(1);
                                                     fecha_nac = auxRset.getString(5);
-                                                    email = auxRset.getString(6);
+                                                    email = auxRset.getString(7);
                                                     this.sesionAspirante = new Aspirante(nombre, apellido, cedula, fecha_nac, email,TipoUsuario.ASPIRANTE);
-                                                  
+                                                    CtrlAspirante.instance().selectOption(1);
                                                 }
                                           
-                                                CtrlAspirante.instance().selectOption(1);                                
+                                                                                
                                                 break;
                                             case "COORDINADOR":
 

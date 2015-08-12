@@ -11,6 +11,9 @@ import com.itextpdf.text.DocumentException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
+import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 /**
  *
@@ -21,8 +24,12 @@ public class IAspirante extends javax.swing.JFrame {
     /**
      * Creates new form IAspirante
      */
-    public IAspirante() {
+    public IAspirante() throws SQLException {
         initComponents();
+        //DefaultTableCellRenderer centerRenderer = new DefaultTableCellHeaderRenderer();
+        
+        //nombreSesion.setText("Usuario: "+CtrlPrincipal.instance().sesionAspirante.getNombre()+" "+CtrlPrincipal.instance().sesionAspirante.getApellido());
+        //centerRenderer.setHorizontalAlignment(JLabel.CENTER);
     }
 
     /**
@@ -37,6 +44,7 @@ public class IAspirante extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        nombreSesion = new javax.swing.JLabel();
         MenuBar = new javax.swing.JMenuBar();
         Salir = new javax.swing.JMenu();
         ExitOption = new javax.swing.JMenuItem();
@@ -173,11 +181,17 @@ public class IAspirante extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(nombreSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addContainerGap()
+                .addComponent(nombreSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -236,5 +250,6 @@ public class IAspirante extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel nombreSesion;
     // End of variables declaration//GEN-END:variables
 }

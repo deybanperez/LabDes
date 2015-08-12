@@ -5,14 +5,20 @@
  */
 package Usuario.Coordinador;
 
+import BD.CtrlBD;
 import Controladores.CtrlPrincipal;
 import Main.IPrincipal;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 /**
  *
@@ -23,8 +29,13 @@ public class IPublicarConcurso extends javax.swing.JFrame {
     /**
      * Creates new form IPublicarConcurso
      */
-    public IPublicarConcurso() {
+    public IPublicarConcurso() throws SQLException {
         initComponents();
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellHeaderRenderer();
+        
+        int fila=0,columna=0;
+        DefaultTableModel model = new DefaultTableModel();
+        
         codigo.setHorizontalAlignment(JTextField.CENTER);
         semestre.setHorizontalAlignment(JTextField.CENTER);
         nombre.setHorizontalAlignment(JTextField.CENTER);
@@ -33,6 +44,35 @@ public class IPublicarConcurso extends javax.swing.JFrame {
         preparadoresI.setHorizontalAlignment(JTextField.CENTER);
         preparadoresII.setHorizontalAlignment(JTextField.CENTER);
         ((JLabel)estados.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        CtrlPrincipal.instance().ctrlBD.SetQuery("SELECT MS.ID_MATERIA,MS.SEMESTRE,MS.NOMBRE_MATERIA FROM MATERIA_SEMESTRE MS, COORDINADOR C WHERE MS.ID_MATERIA = C.ID_MATERIA AND MS.SEMESTRE = C.SEMESTRE AND C.CEDULA ="+CtrlPrincipal.instance().sesionCoordinador.getCedula());        
+        ResultSet auxRset = CtrlPrincipal.instance().ctrlBD.GetQuery();
+     
+        while (auxRset.next())
+        {
+        model = (DefaultTableModel) tablaNotificaciones.getModel();
+                model.addRow(new Vector());
+                this.tablaNotificaciones.setValueAt(auxRset.getString(1), fila, columna++);
+                this.tablaNotificaciones.setValueAt(auxRset.getString(2), fila, columna++);
+                this.tablaNotificaciones.setValueAt(auxRset.getString(3), fila, columna++);            
+                /*this.tablaNotificaciones.setValueAt(auxRset.getString(4), fila, columna++);
+                this.tablaNotificaciones.setValueAt(auxRset.getString(5), fila, columna++);
+                this.tablaNotificaciones.setValueAt(auxRset.getString(6), fila, columna++);
+                this.tablaNotificaciones.setValueAt(auxRset.getString(7), fila, columna++);*/
+                columna=0;
+                fila++;
+        }
+        
+
+            for(int i = 0; i < this.tablaNotificaciones.getColumnCount(); i++)
+                this.tablaNotificaciones.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            
+        if(this.tablaNotificaciones.getRowCount() > 0 )
+            {
+                this.codigo.setText(this.tablaNotificaciones.getModel().getValueAt(0,0).toString());
+                this.semestre.setText(this.tablaNotificaciones.getModel().getValueAt(0,1).toString());
+                this.nombre.setText(this.tablaNotificaciones.getModel().getValueAt(0,2).toString());
+            }
+        
     }
 
     /**
@@ -111,19 +151,26 @@ public class IPublicarConcurso extends javax.swing.JFrame {
 
         jLabel9.setText("Estado:");
 
+        codigo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         codigo.setText("jTextField1");
+        codigo.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        codigo.setEnabled(false);
 
+        semestre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         semestre.setText("jTextField1");
+        semestre.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        semestre.setEnabled(false);
 
+        nombre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         nombre.setText("jTextField1");
+        nombre.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        nombre.setEnabled(false);
 
-        fechaInicio.setText("jTextField1");
-
-        fechaFin.setText("jTextField1");
-
-        preparadoresI.setText("jTextField1");
-
-        preparadoresII.setText("jTextField1");
+        fechaInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaInicioActionPerformed(evt);
+            }
+        });
 
         estados.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Abierto", "Cerrado" }));
         estados.addActionListener(new java.awt.event.ActionListener() {
@@ -408,40 +455,10 @@ public class IPublicarConcurso extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(IPublicarConcurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(IPublicarConcurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(IPublicarConcurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(IPublicarConcurso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void fechaInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaInicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaInicioActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new IPublicarConcurso().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem ExitOption;
