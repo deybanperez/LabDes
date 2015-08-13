@@ -8,6 +8,7 @@ package Controladores;
 import Main.IPrincipal;
 import Usuario.Aspirante.IAspirante;
 import Usuario.Coordinador.ICoordinador;
+import Usuario.Coordinador.IModificarEstadoConcurso;
 import Usuario.Coordinador.IPlazasAsignadas;
 import Usuario.Coordinador.IPublicarConcurso;
 import Usuario.DirectorEscuela.IDirectorEscuela;
@@ -113,6 +114,47 @@ public class CtrlCoordinador {
                         JOptionPane.showMessageDialog(null,"Formato de fechas incorrecto");
                 }else
                     JOptionPane.showMessageDialog(null,"Los campos deben ser llenados");
+                break;
+                
+            case 7:
+                
+                CtrlPrincipal.instance().vistaCoordinador.setVisible(false);
+                CtrlPrincipal.instance().vistaModificarEstadoConcurso = new IModificarEstadoConcurso();
+                CtrlPrincipal.instance().vistaModificarEstadoConcurso.setLocationRelativeTo(null);
+                CtrlPrincipal.instance().vistaModificarEstadoConcurso.setVisible(true);
+                break;
+                
+            case 8:
+                
+                 CtrlPrincipal.instance().vistaModificarEstadoConcurso.setVisible(true);
+                 CtrlPrincipal.instance().vistaCoordinador = new ICoordinador();
+                 CtrlPrincipal.instance().vistaCoordinador.setLocationRelativeTo(null);
+                 CtrlPrincipal.instance().vistaCoordinador.setVisible(true);
+                 break;
+                
+            case 9:
+                
+                if(CtrlPrincipal.instance().vistaModificarEstadoConcurso.EmptyFields())
+                {
+                    if(CtrlPrincipal.instance().VerificarLongitudFechas(CtrlPrincipal.instance().vistaModificarEstadoConcurso.getFechaInicio(),CtrlPrincipal.instance().vistaModificarEstadoConcurso.getFechafin()))
+                    {
+                        if(CtrlPrincipal.instance().verificarFecha(CtrlPrincipal.instance().vistaModificarEstadoConcurso.getFechaInicio(), CtrlPrincipal.instance().vistaModificarEstadoConcurso.getFechafin()))
+                        {
+                            if(CtrlPrincipal.instance().ctrlBD.SetQuery ("UPDATE CONCURSO SET FECHA_INICIO='"+CtrlPrincipal.instance().vistaModificarEstadoConcurso.getFechaInicio()+"', FECHA_FIN='"+CtrlPrincipal.instance().vistaModificarEstadoConcurso.getFechafin()+"', STATUS='"+CtrlPrincipal.instance().vistaModificarEstadoConcurso.getComboBoxValue()+"' WHERE ID_MATERIA="+CtrlPrincipal.instance().vistaModificarEstadoConcurso.getIDMateria()+" AND SEMESTRE='"+CtrlPrincipal.instance().vistaModificarEstadoConcurso.getSemestre()+"'"))
+                            {
+                                CtrlPrincipal.instance().vistaModificarEstadoConcurso.setVisible(false);
+                                CtrlPrincipal.instance().vistaModificarEstadoConcurso = new IModificarEstadoConcurso();
+                                CtrlPrincipal.instance().vistaModificarEstadoConcurso.setLocationRelativeTo(null);
+                                CtrlPrincipal.instance().vistaModificarEstadoConcurso.setVisible(true);
+                                JOptionPane.showMessageDialog(null, "Update realizado con éxito");
+                            }else
+                                JOptionPane.showMessageDialog(null, "Error al realizar el update");
+                        }else
+                            JOptionPane.showMessageDialog(null, "Error en el formato de las fechas");
+                    }else
+                        JOptionPane.showMessageDialog(null, "Error en el formato de las fechas");
+                }else
+                    JOptionPane.showMessageDialog(null, "Los campos deben estar llenos");
                 break;
                 
             case 100: //Cerrar sesion desde la interafz principal

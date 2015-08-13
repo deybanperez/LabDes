@@ -1,42 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 5d5eaae91ec2447a0b41601cb6dd63032109eee7
-            <file>file:/C:/Users/deyban.perez/Documents/Repos/LabDes/LabDes-master/GestionApp/src/Controladores/CtrlPrincipal.java</file>
             <file>file:/C:/Users/deyban.perez/Documents/Repos/LabDes/LabDes-master/GestionApp/src/Controladores/CtrlCoordinador.java</file>
-            <file>file:/C:/Users/deyban.perez/Documents/Repos/LabDes/LabDes-master/GestionApp/src/Usuario/Coordinador/ICoordinador.java</file>
+            <file>file:/C:/Users/deyban.perez/Documents/Repos/LabDes/LabDes-master/GestionApp/src/Usuario/JefeDepartamento/IAsignarPlazas.java</file>
             <file>file:/C:/Users/deyban.perez/Documents/Repos/LabDes/LabDes-master/GestionApp/src/Controladores/CtrlJefeDepartamento.java</file>
-            <file>file:/C:/Users/deyban.perez/Documents/Repos/LabDes/LabDes-master/GestionApp/src/Usuario/Coordinador/IPublicarConcurso.java</file>
-            <file>file:/C:/Users/deyban.perez/Documents/Repos/LabDes/LabDes-master/GestionApp/src/BD/CtrlBD.java</file>
-<<<<<<< HEAD
-=======
-=======
-<<<<<<< HEAD
->>>>>>> 1082259fd785b2a6231bcaec469c11bc0d6f7f5b
-            <file>file:/C:/Users/soluciones/Desktop/Universidad/LabDes/LabDes-master/GestionApp/src/Controladores/CtrlCoordinador.java</file>
-            <file>file:/C:/Users/soluciones/Desktop/Universidad/LabDes/LabDes-master/GestionApp/src/Controladores/CtrlAspirante.java</file>
-            <file>file:/C:/Users/soluciones/Desktop/Universidad/LabDes/LabDes-master/GestionApp/src/Usuario/Perfil.java</file>
-            <file>file:/C:/Users/soluciones/Desktop/Universidad/LabDes/LabDes-master/GestionApp/src/Usuario/Aspirante/ILlenarPlanilla.java</file>
-            <file>file:/C:/Users/soluciones/Desktop/Universidad/LabDes/LabDes-master/GestionApp/src/Controladores/CtrlPrincipal.java</file>
-            <file>file:/C:/Users/soluciones/Desktop/Universidad/LabDes/LabDes-master/GestionApp/src/Usuario/Aspirante/Aspirante.java</file>
-            <file>file:/C:/Users/soluciones/Desktop/Universidad/LabDes/LabDes-master/GestionApp/src/Usuario/Aspirante/IAspirante.java</file>
-<<<<<<< HEAD
-=======
-=======
-            <file>file:/C:/Users/administrador/Desktop/LabDes/LabDes-master/GestionApp/src/Controladores/CtrlPrincipal.java</file>
-            <file>file:/C:/Users/administrador/Desktop/LabDes/LabDes-master/GestionApp/src/Usuario/JefeDepartamento/IAsignarPlazas.java</file>
-            <file>file:/C:/Users/administrador/Desktop/LabDes/LabDes-master/GestionApp/src/Usuario/Coordinador/IPublicarConcurso.java</file>
-            <file>file:/C:/Users/administrador/Desktop/LabDes/LabDes-master/GestionApp/src/Usuario/Coordinador/ICoordinador.java</file>
->>>>>>> 059a730f8ce3402af2ac933db133fc4be6f1b72b
->>>>>>> dda347b3f6122a524a262dd3f1905d785acb9a96
->>>>>>> 1082259fd785b2a6231bcaec469c11bc0d6f7f5b
->>>>>>> 5d5eaae91ec2447a0b41601cb6dd63032109eee7
+            <file>file:/C:/Users/deyban.perez/Documents/Repos/LabDes/LabDes-master/GestionApp/src/Usuario/Coordinador/IModificarEstadoConcurso.java</file>
         </group>
     </open-files>
 </project-private>

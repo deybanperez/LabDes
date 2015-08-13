@@ -44,6 +44,7 @@ public class IPublicarConcurso extends javax.swing.JFrame {
         fechaFin.setHorizontalAlignment(JTextField.CENTER);
         preparadoresI.setHorizontalAlignment(JTextField.CENTER);
         preparadoresII.setHorizontalAlignment(JTextField.CENTER);
+        
         CtrlPrincipal.instance().ctrlBD.SetQuery("SELECT MS.ID_MATERIA,MS.SEMESTRE,MS.NOMBRE_MATERIA, MS.CANT_PLAZAS_PI, MS.CANT_PLAZAS_PII FROM MATERIA_SEMESTRE MS, COORDINADOR C WHERE MS.ID_MATERIA = C.ID_MATERIA AND MS.SEMESTRE = C.SEMESTRE AND C.CEDULA ="+CtrlPrincipal.instance().sesionCoordinador.getCedula());        
         ResultSet auxRset = CtrlPrincipal.instance().ctrlBD.GetQuery();
      

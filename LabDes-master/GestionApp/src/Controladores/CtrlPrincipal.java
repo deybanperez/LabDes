@@ -44,6 +44,7 @@ public class CtrlPrincipal
     public Aspirante sesionAspirante;
     public IPlazasAsignadas vistaPlazasAsignadasCoordinador;
     public Usuario.Coordinador.IPublicarConcurso vistaPublicarConcurso;
+    public Usuario.Coordinador.IModificarEstadoConcurso vistaModificarEstadoConcurso;
     
     private CtrlPrincipal() throws SQLException{
         
@@ -240,6 +241,17 @@ public class CtrlPrincipal
                 CtrlCoordinador.instance().selectOption(6);
                 break;
                 
+            case 45:
+                CtrlCoordinador.instance().selectOption(7);
+                break;
+                
+            case 46:
+                CtrlCoordinador.instance().selectOption(8);
+                break;
+                
+            case 47:
+                CtrlCoordinador.instance().selectOption(9);
+                break;
             case 67:
                 CtrlCoordinador.instance().selectOption(102);
                 break;
