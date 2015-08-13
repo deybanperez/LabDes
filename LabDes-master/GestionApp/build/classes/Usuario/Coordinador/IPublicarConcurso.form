@@ -386,12 +386,12 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha Inicio:"/>
+            <Property name="text" type="java.lang.String" value="Fecha Inicio: DD/MM/AAAA"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha Fin:"/>
+            <Property name="text" type="java.lang.String" value="Fecha Fin:  DD/MM/AAAA"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">

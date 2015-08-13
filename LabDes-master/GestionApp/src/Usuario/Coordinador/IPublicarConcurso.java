@@ -145,9 +145,9 @@ public class IPublicarConcurso extends javax.swing.JFrame {
 
         jLabel3.setText("Nombre");
 
-        jLabel4.setText("Fecha Inicio:");
+        jLabel4.setText("Fecha Inicio: DD/MM/AAAA");
 
-        jLabel5.setText("Fecha Fin:");
+        jLabel5.setText("Fecha Fin:  DD/MM/AAAA");
 
         jLabel6.setText("Preparadores I:");
 
@@ -465,7 +465,7 @@ public class IPublicarConcurso extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         try {
-            // TODO add your handling code here:
+            // TODO add your handling code here:            
             CtrlPrincipal.instance().selectOption(44);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
@@ -570,5 +570,13 @@ public class IPublicarConcurso extends javax.swing.JFrame {
     public String getFechafin()
     {
         return fechaFin.getText();
+    }
+    
+    public boolean EmptyFields()
+    {
+        if(!(fechaInicio.getText().isEmpty() || fechaFin.getText().isEmpty() || codigo.getText().isEmpty()))
+            return true;
+    
+        return false;
     }
 }

@@ -19,6 +19,8 @@ import Usuario.SecretariaDepartamento.*;
 import Usuario.SecretariaEscuela.*;
 import Usuario.TipoUsuario;
 import java.sql.Array;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -282,6 +284,36 @@ public class CtrlPrincipal
                 return false;
         }
         return true;
+    }
+    
+    public boolean verificarFecha (String FI, String FF)
+    {
+        String[] cmp1,cmp2;
+        
+        for (int i=0; i<3;i++)
+        {
+            cmp1= FI.split("/");
+            cmp2=FF.split("/");
+            if (Integer.parseInt(cmp1[i].toString())<Integer.parseInt(cmp2[i].toString()))
+                return true;
+        }
+        
+        return false;
+    }
+    
+    public boolean VerificarLongitudFechas(String fechaInicio, String fechafin)
+    {
+        if( (fechaInicio.length() == 10) && (fechafin.length() == 10) )
+        {
+            Pattern pat = Pattern.compile("\\d\\d/\\d\\d/\\d\\d\\d\\d");
+            Matcher mat1 = pat.matcher(fechaInicio);
+            Matcher mat2 = pat.matcher(fechafin);
+            
+            if(mat1.matches() && mat2.matches())
+                return true;
+        }
+        
+        return false;
     }
 }
 
