@@ -66,6 +66,19 @@ public class IAspirar extends javax.swing.JFrame {
                
         for(int i = 0; i < this.jTable1.getColumnCount(); i++)
             this.jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        
+        
+        if(this.jTable1.getRowCount() > 0 )
+            {
+                this.label_coordinador.setText(this.jTable1.getModel().getValueAt(0,0).toString());
+                this.label_correo.setText(this.jTable1.getModel().getValueAt(0,1).toString());
+                this.label_materia.setText(this.jTable1.getModel().getValueAt(0,2).toString());
+                this.label_semestre.setText(this.jTable1.getModel().getValueAt(0,3).toString());
+                this.label_fechain.setText(this.jTable1.getModel().getValueAt(0,4).toString());
+                this.label_fechafin.setText(this.jTable1.getModel().getValueAt(0,5).toString());
+            }
+        
+        
         } catch (SQLException ex) {
             Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -319,12 +332,12 @@ public class IAspirar extends javax.swing.JFrame {
         // TODO add your handling code here
         try {
            
-        CtrlPrincipal.instance().selectOption(2);
-        } catch (IOException ex) {
-            Logger.getLogger(IMisConcursos.class.getName()).log(Level.SEVERE, null, ex);
+        CtrlPrincipal.instance().selectOption(70);
         }
          catch (SQLException ex) {
             Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IAspirar.class.getName()).log(Level.SEVERE, null, ex);
         }
       
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -338,11 +351,11 @@ public class IAspirar extends javax.swing.JFrame {
         try {
 
         CtrlAspirante.instance().selectOption(9);
-        } catch (IOException ex) {
-            Logger.getLogger(IMisConcursos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
          catch (SQLException ex) {
             Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IAspirar.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_submitActionPerformed
@@ -401,4 +414,15 @@ return label_semestre.getText();
     private javax.swing.JTextField label_semestre;
     private javax.swing.JButton submit;
     // End of variables declaration//GEN-END:variables
+
+    public boolean EmptyFields()
+    {
+        if(!(label_fechain.getText().isEmpty() || label_fechafin.getText().isEmpty() || label_materia.getText().isEmpty()))
+            return true;
+    
+        return false;
+    }
+
+
+
 }

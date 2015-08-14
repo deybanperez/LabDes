@@ -266,6 +266,7 @@ public class CtrlPrincipal
                 
            //Aca comienza todo el manejo de aspirante     
             case 70:
+                CtrlAspirante.instance().selectOption(6);
                 break;
                 
             //Aca comienza todo el manejo de secretaria escuela

@@ -11,7 +11,6 @@ import Usuario.Aspirante.IAspirante;
 import Usuario.Aspirante.IAspirar;
 import Usuario.Aspirante.IConsignar;
 import Usuario.Aspirante.ILlenarPlanilla;
-import Usuario.Aspirante.IMisConcursos;
 import Usuario.Coordinador.ICoordinador;
 import Usuario.DirectorEscuela.IDirectorEscuela;
 import Usuario.JefeDepartamento.IAsignarPlazas;
@@ -49,7 +48,6 @@ public class CtrlAspirante
 {
     private static CtrlAspirante uniqueInstance = null;
     public ILlenarPlanilla ILlenarPlanilla;
-    public IMisConcursos IMisConcursos;
     public IConsignar IConsignar;
     public IAspirar IAspirar;
     public ArrayList<String> ids_concurso;
@@ -59,7 +57,6 @@ public class CtrlAspirante
     private CtrlAspirante() throws SQLException{
         uniqueInstance = this;
         ILlenarPlanilla = new ILlenarPlanilla();
-        IMisConcursos = new IMisConcursos();
         IConsignar= new IConsignar();
         IAspirar= new IAspirar();
     }
@@ -93,7 +90,6 @@ public class CtrlAspirante
                 CtrlPrincipal.instance().vistaAspirante.setLocationRelativeTo(null);
                 CtrlPrincipal.instance().vistaAspirante.setVisible(true);
                 ILlenarPlanilla.setVisible(false);
-                IMisConcursos.setVisible(false);
                 IConsignar.setVisible(false);
                 IAspirar.setVisible(false);
             break;
@@ -156,16 +152,6 @@ public class CtrlAspirante
             break;
             
             case 5:
-         //PdfReader pdfReader2;
-                /*String dir = CtrlPrincipal.instance().vistaAspirante.getFile().getCurrentDirectory().getAbsolutePath();
-                System.err.println(dir+"/"+CtrlPrincipal.instance().vistaAspirante.getArch_subido().getText());
-                try{ 
-                //definiendo la ruta en la propiedad file
-                Runtime.getRuntime().exec("cmd /c start "+dir+"/"+CtrlPrincipal.instance().vistaAspirante.getArch_subido().getText());
-
-                }catch(IOException e){
-                   e.printStackTrace();
-                } */
         
                 
                 String path = IConsignar.getFile().getCurrentDirectory().getAbsolutePath();
@@ -175,27 +161,20 @@ public class CtrlAspirante
                 dir.mkdirs();
                 file_output=new FileOutputStream("src/Usuario/Aspirante/Documentos_"+CtrlPrincipal.instance().sesionAspirante.getCedula()+"/"+IConsignar.getArch_subido().getText());
                 JOptionPane.showMessageDialog(null, "Archivo guradado exitosamente!");
-
+                
+                break;
 
                 
-                /*if (Desktop.isDesktopSupported()) {
-
-                    File myFile = new File(path+"/"+CtrlPrincipal.instance().vistaAspirante.getArch_subido().getText());
-                    Desktop.getDesktop().open(myFile);
-                }*/
-
-
-
             case 6:
-               
-                IMisConcursos.setLocationRelativeTo(null);
-                IMisConcursos.setVisible(true);
-                CtrlPrincipal.instance().vistaAspirante.setVisible(false);
+                
+                IAspirar.setVisible(false);
+                CtrlPrincipal.instance().vistaAspirante = new IAspirante();
+                CtrlPrincipal.instance().vistaAspirante.setLocationRelativeTo(null);
+                CtrlPrincipal.instance().vistaAspirante.setVisible(true);
+                
+                
                 break;
-                   
 
-
-               
             case 7:    
                 IConsignar.setLocationRelativeTo(null);
                 IConsignar.setVisible(true);
@@ -216,22 +195,27 @@ public class CtrlAspirante
                 String id_coord = this.ids_coordinador.get(selected);;
                 String id_mat =this.ids_materia.get(selected);;
                 String nota = "-1";
-                CtrlPrincipal.instance().ctrlBD.SetQuery(""
-                        + "INSERT INTO ASPIRACIONES VALUES ("
-                        + "aspiraciones_seq.NEXTVAL,"
-                        +id_asp+","
-                        +id_conc+","
-                        + "'Pendiente',"
-                        + "'"+semestre+"',"
-                        + id_coord + ","
-                        + id_mat + ","
-                        + nota
-                        + ")");
-                JOptionPane.showMessageDialog(null, "Usted ha sido agregado al concurso");
-                IAspirar.setLocationRelativeTo(null);
-                IAspirar.setVisible(false);
-                CtrlPrincipal.instance().vistaAspirante.actualizarMisConcursos();
-                CtrlPrincipal.instance().vistaAspirante.setVisible(true);
+                
+                if(CtrlPrincipal.instance().vistaPublicarConcurso.EmptyFields())
+                {
+                
+                    CtrlPrincipal.instance().ctrlBD.SetQuery(""
+                            + "INSERT INTO ASPIRACIONES VALUES ("
+                            + "aspiraciones_seq.NEXTVAL,"
+                            +id_asp+","
+                            +id_conc+","
+                            + "'Pendiente',"
+                            + "'"+semestre+"',"
+                            + id_coord + ","
+                            + id_mat + ","
+                            + nota
+                            + ")");
+                    JOptionPane.showMessageDialog(null, "Usted ha sido agregado al concurso");
+                    IAspirar.setLocationRelativeTo(null);
+                    IAspirar.setVisible(false);
+                    CtrlPrincipal.instance().vistaAspirante.actualizarMisConcursos();
+                    CtrlPrincipal.instance().vistaAspirante.setVisible(true);
+                }
             break;                
                    
         }

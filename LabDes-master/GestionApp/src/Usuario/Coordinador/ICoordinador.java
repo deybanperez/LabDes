@@ -1345,6 +1345,8 @@ public class ICoordinador extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(45);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
