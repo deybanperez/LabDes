@@ -45,6 +45,7 @@ public class IPublicarConcurso extends javax.swing.JFrame {
         fechaFin.setHorizontalAlignment(JTextField.CENTER);
         preparadoresI.setHorizontalAlignment(JTextField.CENTER);
         preparadoresII.setHorizontalAlignment(JTextField.CENTER);
+        
         CtrlPrincipal.instance().ctrlBD.SetQuery("SELECT MS.ID_MATERIA,MS.SEMESTRE,MS.NOMBRE_MATERIA, MS.CANT_PLAZAS_PI, MS.CANT_PLAZAS_PII FROM MATERIA_SEMESTRE MS, COORDINADOR C WHERE MS.ID_MATERIA = C.ID_MATERIA AND MS.SEMESTRE = C.SEMESTRE AND C.CEDULA ="+CtrlPrincipal.instance().sesionCoordinador.getCedula());        
         ResultSet auxRset = CtrlPrincipal.instance().ctrlBD.GetQuery();
      
@@ -146,9 +147,9 @@ public class IPublicarConcurso extends javax.swing.JFrame {
 
         jLabel3.setText("Nombre");
 
-        jLabel4.setText("Fecha Inicio:");
+        jLabel4.setText("Fecha Inicio: DD/MM/AAAA");
 
-        jLabel5.setText("Fecha Fin:");
+        jLabel5.setText("Fecha Fin:  DD/MM/AAAA");
 
         jLabel6.setText("Preparadores I:");
 
@@ -471,7 +472,7 @@ public class IPublicarConcurso extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         try {
-            // TODO add your handling code here:
+            // TODO add your handling code here:            
             CtrlPrincipal.instance().selectOption(44);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
@@ -578,5 +579,13 @@ public class IPublicarConcurso extends javax.swing.JFrame {
     public String getFechafin()
     {
         return fechaFin.getText();
+    }
+    
+    public boolean EmptyFields()
+    {
+        if(!(fechaInicio.getText().isEmpty() || fechaFin.getText().isEmpty() || codigo.getText().isEmpty()))
+            return true;
+    
+        return false;
     }
 }

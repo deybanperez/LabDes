@@ -7,7 +7,6 @@ package Usuario.Coordinador;
 
 import Controladores.CtrlPrincipal;
 import Main.IPrincipal;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
@@ -33,24 +32,28 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 /**
  *
- * @author Xiomara
+ * @author deyban.perez
  */
-public class ICoordinador extends javax.swing.JFrame {
+public class IModificarEstadoConcurso extends javax.swing.JFrame {
 
     /**
-     * Creates new form ICoordinador
+     * Creates new form IModificarEstadoConcurso
      */
-    public ICoordinador() throws SQLException
+    public IModificarEstadoConcurso() throws SQLException
     {
-        initComponents(); 
-        int fila=0,columna=0;
+        initComponents();
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellHeaderRenderer();
+        
+        int fila=0,columna=0;
         DefaultTableModel model = new DefaultTableModel();
         ResultSet auxRset = new ResultSet() {
 
@@ -1010,55 +1013,49 @@ public class ICoordinador extends javax.swing.JFrame {
             }
         };
         
-        //Primera tabla
-        CtrlPrincipal.instance().ctrlBD.SetQuery("SELECT MS.ID_MATERIA,MS.SEMESTRE,MS.NOMBRE_MATERIA FROM MATERIA_SEMESTRE MS, COORDINADOR C WHERE MS.ID_MATERIA = C.ID_MATERIA AND MS.SEMESTRE = C.SEMESTRE AND C.CEDULA ="+CtrlPrincipal.instance().sesionCoordinador.getCedula());        
-        auxRset = CtrlPrincipal.instance().ctrlBD.GetQuery();
-     
-        while (auxRset.next())
-        {
-            model= (DefaultTableModel) tablaNotificaciones.getModel();
-            model.addRow(new Vector());
-            tablaNotificaciones.setValueAt(auxRset.getString(1), fila, columna++);
-            tablaNotificaciones.setValueAt(auxRset.getString(2), fila, columna++);
-            tablaNotificaciones.setValueAt(auxRset.getString(3), fila, columna++);
-            columna=0;
-            fila++;
-        }
-        
-        jLabel1.setText("Usuario: "+CtrlPrincipal.instance().sesionCoordinador.getNombre()+" "+CtrlPrincipal.instance().sesionCoordinador.getApellido());
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-               
-        for(int i = 0; i < this.tablaNotificaciones.getColumnCount(); i++)
-            this.tablaNotificaciones.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        
-        //Segunda tabla
-        
-        fila = 0;
-        columna = 0;
+        codigo.setHorizontalAlignment(JTextField.CENTER);
+        semestre.setHorizontalAlignment(JTextField.CENTER);
+        nombre.setHorizontalAlignment(JTextField.CENTER);
+        fechaInicio.setHorizontalAlignment(JTextField.CENTER);
+        fechaFin.setHorizontalAlignment(JTextField.CENTER);
+        preparadoresI.setHorizontalAlignment(JTextField.CENTER);
+        preparadoresII.setHorizontalAlignment(JTextField.CENTER);
+        ((JLabel)estado.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         
         CtrlPrincipal.instance().ctrlBD.SetQuery("SELECT DISTINCT(MS.ID_MATERIA),MS.SEMESTRE,MS.NOMBRE_MATERIA, MS.CANT_PLAZAS_PI, MS.CANT_PLAZAS_PI, CO.FECHA_INICIO, CO.FECHA_FIN, CO.STATUS FROM MATERIA_SEMESTRE MS, COORDINADOR C, CONCURSO CO WHERE MS.ID_MATERIA = CO.ID_MATERIA AND C.CEDULA = CO.CEDULA_COORDINADOR AND C.CEDULA ="+CtrlPrincipal.instance().sesionCoordinador.getCedula());        
         auxRset = CtrlPrincipal.instance().ctrlBD.GetQuery();
         
         while (auxRset.next())
         {
-                model = (DefaultTableModel) tablaNotificaciones2.getModel();
+                model = (DefaultTableModel) tablaNotificaciones.getModel();
                 model.addRow(new Vector());
-                this.tablaNotificaciones2.setValueAt(auxRset.getString(1), fila, columna++);
-                this.tablaNotificaciones2.setValueAt(auxRset.getString(2), fila, columna++);
-                this.tablaNotificaciones2.setValueAt(auxRset.getString(3), fila, columna++);            
-                this.tablaNotificaciones2.setValueAt(auxRset.getString(4), fila, columna++);
-                this.tablaNotificaciones2.setValueAt(auxRset.getString(5), fila, columna++);
-                this.tablaNotificaciones2.setValueAt(auxRset.getString(6), fila, columna++);
-                this.tablaNotificaciones2.setValueAt(auxRset.getString(7), fila, columna++);
-                this.tablaNotificaciones2.setValueAt(auxRset.getString(8), fila, columna++);
+                this.tablaNotificaciones.setValueAt(auxRset.getString(1), fila, columna++);
+                this.tablaNotificaciones.setValueAt(auxRset.getString(2), fila, columna++);
+                this.tablaNotificaciones.setValueAt(auxRset.getString(3), fila, columna++);            
+                this.tablaNotificaciones.setValueAt(auxRset.getString(4), fila, columna++);
+                this.tablaNotificaciones.setValueAt(auxRset.getString(5), fila, columna++);
+                this.tablaNotificaciones.setValueAt(auxRset.getString(6), fila, columna++);
+                this.tablaNotificaciones.setValueAt(auxRset.getString(7), fila, columna++);
+                this.tablaNotificaciones.setValueAt(auxRset.getString(8), fila, columna++);
                 
                 columna=0;
                 fila++;
         }
         
-
-            for(int i = 0; i < this.tablaNotificaciones2.getColumnCount(); i++)
-                this.tablaNotificaciones2.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        for(int i = 0; i < this.tablaNotificaciones.getColumnCount(); i++)
+                this.tablaNotificaciones.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        
+        if(this.tablaNotificaciones.getRowCount() > 0 )
+            {
+                this.codigo.setText(this.tablaNotificaciones.getModel().getValueAt(0,0).toString());
+                this.semestre.setText(this.tablaNotificaciones.getModel().getValueAt(0,1).toString());
+                this.nombre.setText(this.tablaNotificaciones.getModel().getValueAt(0,2).toString());
+                this.preparadoresI.setText(this.tablaNotificaciones.getModel().getValueAt(0,3).toString());
+                this.preparadoresII.setText(this.tablaNotificaciones.getModel().getValueAt(0,4).toString());
+                this.fechaInicio.setText(this.tablaNotificaciones.getModel().getValueAt(0,5).toString());
+                this.fechaFin.setText(this.tablaNotificaciones.getModel().getValueAt(0,6).toString());
+            }
+        
     }
 
     /**
@@ -1070,31 +1067,52 @@ public class ICoordinador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
         tablaNotificaciones = new javax.swing.JTable();
+        lCodigo = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        codigo = new javax.swing.JTextField();
+        semestre = new javax.swing.JTextField();
+        nombre = new javax.swing.JTextField();
+        fechaInicio = new javax.swing.JTextField();
+        fechaFin = new javax.swing.JTextField();
+        preparadoresI = new javax.swing.JTextField();
+        preparadoresII = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        estado = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tablaNotificaciones2 = new javax.swing.JTable();
         MenuBar = new javax.swing.JMenuBar();
-        Salir = new javax.swing.JMenu();
-        ExitOption = new javax.swing.JMenuItem();
-        acciones = new javax.swing.JMenu();
-        generarPlanilla = new javax.swing.JMenuItem();
-        visualizarPlazas = new javax.swing.JMenuItem();
-        publicarConcurso = new javax.swing.JMenuItem();
-        enviarSolicitud = new javax.swing.JMenuItem();
-        evaluarDcoumento = new javax.swing.JMenuItem();
-        completarPerfilAspirante = new javax.swing.JMenuItem();
-        aplicarConcurso = new javax.swing.JMenuItem();
-        notificarGanador = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Coordinador");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Materias Coordinadas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 24))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Editar Concurso", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 24))); // NOI18N
         jPanel1.setToolTipText("");
 
         tablaNotificaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1103,151 +1121,214 @@ public class ICoordinador extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Semestre", "Nombre"
+                "Código", "Semestre", "Nombre", "Cantidad Preparadores I", "Cantidad Preparadores II", "Fecha Inicio", "Fecha Fin", "Estado"
             }
         ));
-        tablaNotificaciones.setEnabled(false);
-        jScrollPane1.setViewportView(tablaNotificaciones);
+        tablaNotificaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaNotificacionesMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tablaNotificaciones);
+
+        lCodigo.setText("Código:");
+
+        jLabel2.setText("Semestre:");
+
+        jLabel3.setText("Nombre");
+
+        jLabel4.setText("Fecha Inicio: DD/MM/AAAA");
+
+        jLabel5.setText("Fecha Fin:  DD/MM/AAAA");
+
+        jLabel6.setText("Preparadores I:");
+
+        jLabel7.setText("Preparadores II:");
+
+        codigo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        codigo.setToolTipText("");
+        codigo.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        codigo.setEnabled(false);
+
+        semestre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        semestre.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        semestre.setEnabled(false);
+
+        nombre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        nombre.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        nombre.setEnabled(false);
+        nombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreActionPerformed(evt);
+            }
+        });
+
+        fechaInicio.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        fechaInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaInicioActionPerformed(evt);
+            }
+        });
+
+        fechaFin.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+
+        preparadoresI.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        preparadoresI.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        preparadoresI.setEnabled(false);
+        preparadoresI.setSelectionColor(new java.awt.Color(0, 0, 0));
+
+        preparadoresII.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        preparadoresII.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        preparadoresII.setEnabled(false);
+        preparadoresII.setSelectionColor(new java.awt.Color(0, 0, 0));
+
+        jButton2.setText("Volver");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Enviar");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        estado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        estado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Abierto", "Cerrado" }));
+
+        jLabel1.setText("Estado:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 802, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(61, 61, 61))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(49, 49, 49))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(61, 61, 61))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(129, 129, 129))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(133, 133, 133))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(110, 110, 110))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(estado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(nombre)
+                                    .addComponent(preparadoresI)
+                                    .addComponent(semestre)
+                                    .addComponent(codigo)
+                                    .addComponent(fechaInicio)
+                                    .addComponent(preparadoresII)
+                                    .addComponent(fechaFin))
+                                .addGap(115, 115, 115)))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(semestre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(preparadoresI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(preparadoresII, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(fechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(68, 68, 68)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Concursos Publicados", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 24))); // NOI18N
-        jPanel2.setToolTipText("");
+        jMenu1.setText("App");
+        jMenu1.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
 
-        tablaNotificaciones2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tablaNotificaciones2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Código", "Semestre", "Nombre", "Cantidad Preparadores I", "Cantidad Preparadores II", "Fecha Inicio", "Fecha Fin", "Estado"
-            }
-        ));
-        tablaNotificaciones2.setEnabled(false);
-        jScrollPane3.setViewportView(tablaNotificaciones2);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 987, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        Salir.setText("App");
-        Salir.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
-
-        ExitOption.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
-        ExitOption.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
-        ExitOption.setText("Salir");
-        ExitOption.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ExitOptionMouseClicked(evt);
-            }
-        });
-        ExitOption.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ExitOptionActionPerformed(evt);
-            }
-        });
-        Salir.add(ExitOption);
-
-        MenuBar.add(Salir);
-
-        acciones.setText("Acciones");
-        acciones.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
-
-        generarPlanilla.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.SHIFT_MASK));
-        generarPlanilla.setText("Generar planilla");
-        generarPlanilla.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                generarPlanillaActionPerformed(evt);
-            }
-        });
-        acciones.add(generarPlanilla);
-
-        visualizarPlazas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_MASK));
-        visualizarPlazas.setText("Visualizar Plazas");
-        visualizarPlazas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                visualizarPlazasActionPerformed(evt);
-            }
-        });
-        acciones.add(visualizarPlazas);
-
-        publicarConcurso.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_MASK));
-        publicarConcurso.setText("Publicar Concurso");
-        publicarConcurso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicarConcursoActionPerformed(evt);
-            }
-        });
-        acciones.add(publicarConcurso);
-
-        enviarSolicitud.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK));
-        enviarSolicitud.setText("Enviar Solicitud");
-        acciones.add(enviarSolicitud);
-
-        evaluarDcoumento.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.SHIFT_MASK));
-        evaluarDcoumento.setText("Evaluar Documento");
-        acciones.add(evaluarDcoumento);
-
-        completarPerfilAspirante.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK));
-        completarPerfilAspirante.setText("Completar Perfil de Aspirante");
-        acciones.add(completarPerfilAspirante);
-
-        aplicarConcurso.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_MASK));
-        aplicarConcurso.setText("Aplicar Concurso");
-        aplicarConcurso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aplicarConcursoActionPerformed(evt);
-            }
-        });
-        acciones.add(aplicarConcurso);
-
-        notificarGanador.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_MASK));
-        notificarGanador.setText("Notificar Ganador");
-        notificarGanador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                notificarGanadorActionPerformed(evt);
-            }
-        });
-        acciones.add(notificarGanador);
-
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem1.setText("Editar Concurso");
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
+        jMenuItem1.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        jMenuItem1.setText("Salir");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        acciones.add(jMenuItem1);
+        jMenu1.add(jMenuItem1);
 
-        MenuBar.add(acciones);
+        MenuBar.add(jMenu1);
+
+        jMenu2.setText("Acciones");
+        jMenu2.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_MASK));
+        jMenuItem2.setText("Asignar Plazas");
+        jMenu2.add(jMenuItem2);
+
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK));
+        jMenuItem5.setText("Evaluar Solicitud");
+        jMenu2.add(jMenuItem5);
+
+        MenuBar.add(jMenu2);
 
         setJMenuBar(MenuBar);
 
@@ -1257,122 +1338,146 @@ public class ICoordinador extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(32, 32, 32))
         );
-
-        jPanel1.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void ExitOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitOptionMouseClicked
-        try {
-            // TODO add your handling code here:
-            CtrlPrincipal.instance().selectOption(0);
-        } catch (SQLException ex) {
-            Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_ExitOptionMouseClicked
-
-    private void ExitOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitOptionActionPerformed
-        // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            CtrlPrincipal.instance().selectOption(68);
-        } catch (SQLException ex) {
-            Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_ExitOptionActionPerformed
-
-    private void generarPlanillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarPlanillaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_generarPlanillaActionPerformed
-
-    private void publicarConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicarConcursoActionPerformed
-        try {
-            // TODO add your handling code here:
-            CtrlPrincipal.instance().selectOption(42);
-        } catch (SQLException ex) {
-            Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_publicarConcursoActionPerformed
-
-    private void visualizarPlazasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarPlazasActionPerformed
-        // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            CtrlPrincipal.instance().selectOption(40);
-        } catch (SQLException ex) {
-            Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_visualizarPlazasActionPerformed
-
-    private void notificarGanadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notificarGanadorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_notificarGanadorActionPerformed
-
-    private void aplicarConcursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aplicarConcursoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_aplicarConcursoActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-            CtrlPrincipal.instance().selectOption(45);
+            CtrlPrincipal.instance().selectOption(28);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void tablaNotificacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaNotificacionesMouseClicked
+        // TODO add your handling code here:
+        try
+        {
+            int row = tablaNotificaciones.getSelectedRow();
+
+            codigo.setText(tablaNotificaciones.getModel().getValueAt(row, 0).toString());
+            semestre.setText(tablaNotificaciones.getModel().getValueAt(row, 1).toString());
+            nombre.setText(tablaNotificaciones.getModel().getValueAt(row, 2).toString());
+            preparadoresI.setText(tablaNotificaciones.getModel().getValueAt(row, 3).toString());
+            preparadoresII.setText(tablaNotificaciones.getModel().getValueAt(row, 4).toString());
+            fechaInicio.setText(tablaNotificaciones.getModel().getValueAt(row, 5).toString());
+            fechaFin.setText(tablaNotificaciones.getModel().getValueAt(row, 6).toString());
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_tablaNotificacionesMouseClicked
+
+    private void nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreActionPerformed
+
+    private void fechaInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaInicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaInicioActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            CtrlPrincipal.instance().selectOption(46);
+        } catch (SQLException ex) {
+            Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            CtrlPrincipal.instance().selectOption(47);
+        } catch (SQLException ex) {
+            Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem ExitOption;
     private javax.swing.JMenuBar MenuBar;
-    private javax.swing.JMenu Salir;
-    private javax.swing.JMenu acciones;
-    private javax.swing.JMenuItem aplicarConcurso;
-    private javax.swing.JMenuItem completarPerfilAspirante;
-    private javax.swing.JMenuItem enviarSolicitud;
-    private javax.swing.JMenuItem evaluarDcoumento;
-    private javax.swing.JMenuItem generarPlanilla;
+    private javax.swing.JTextField codigo;
+    private javax.swing.JComboBox estado;
+    private javax.swing.JTextField fechaFin;
+    private javax.swing.JTextField fechaInicio;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JMenuItem notificarGanador;
-    private javax.swing.JMenuItem publicarConcurso;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lCodigo;
+    private javax.swing.JTextField nombre;
+    private javax.swing.JTextField preparadoresI;
+    private javax.swing.JTextField preparadoresII;
+    private javax.swing.JTextField semestre;
     private javax.swing.JTable tablaNotificaciones;
-    private javax.swing.JTable tablaNotificaciones2;
-    private javax.swing.JMenuItem visualizarPlazas;
     // End of variables declaration//GEN-END:variables
-    public javax.swing.JTable getJTable(){
-        return tablaNotificaciones;
-    }
-}
 
+    public boolean EmptyFields()
+    {
+        if(!(fechaInicio.getText().isEmpty() || fechaFin.getText().isEmpty() || codigo.getText().isEmpty()))
+            return true;
+
+        return false;
+    }
+
+    public String getFechaInicio()
+    {
+        return fechaInicio.getText();
+    }
+    
+    public String getFechafin()
+    {
+        return fechaFin.getText();
+    }
+    
+    public String getComboBoxValue()
+    {
+        return estado.getSelectedItem().toString();
+    }
+    
+    public String getSemestre()
+    {
+        return semestre.getText();
+    }
+    
+    public int getIDMateria()
+    {
+        return Integer.parseInt(codigo.getText());
+    }
+    
+
+
+}

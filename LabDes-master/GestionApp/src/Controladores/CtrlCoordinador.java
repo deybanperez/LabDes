@@ -8,6 +8,7 @@ package Controladores;
 import Main.IPrincipal;
 import Usuario.Aspirante.IAspirante;
 import Usuario.Coordinador.ICoordinador;
+import Usuario.Coordinador.IModificarEstadoConcurso;
 import Usuario.Coordinador.IPlazasAsignadas;
 import Usuario.Coordinador.IPublicarConcurso;
 import Usuario.DirectorEscuela.IDirectorEscuela;
@@ -16,6 +17,7 @@ import Usuario.JefeDepartamento.IJefeDepartamento;
 import Usuario.Preparador.IPreparador;
 import Usuario.SecretariaDepartamento.ISecretariaDepartamento;
 import Usuario.SecretariaEscuela.ISecretariaEscuela;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -85,16 +87,74 @@ public class CtrlCoordinador {
                 
             case 6:
                 
-                //Falta hacer las validaciones
-                
-                int id_materia = CtrlPrincipal.instance().vistaPublicarConcurso.getIDMateria();
-                fecha_inicio = CtrlPrincipal.instance().vistaPublicarConcurso.getFechafin();
-                if(CtrlPrincipal.instance().ctrlBD.SetQuery("INSERT INTO CONCURSO VALUES ("+10+",'Abierto',"+id_materia+",'"+CtrlPrincipal.instance().vistaPublicarConcurso.getSemestre()+"',"+CtrlPrincipal.instance().sesionCoordinador.getCedula()+",'"+CtrlPrincipal.instance().vistaPublicarConcurso.getFechaInicio()+"','"+CtrlPrincipal.instance().vistaPublicarConcurso.getFechafin()+"')"))
+                if(CtrlPrincipal.instance().vistaPublicarConcurso.EmptyFields())
                 {
-                    
-         
+                    if(CtrlPrincipal.instance().VerificarLongitudFechas(CtrlPrincipal.instance().vistaPublicarConcurso.getFechaInicio(),CtrlPrincipal.instance().vistaPublicarConcurso.getFechafin()))
+                    {
+                        if(CtrlPrincipal.instance().verificarFecha(CtrlPrincipal.instance().vistaPublicarConcurso.getFechaInicio(), CtrlPrincipal.instance().vistaPublicarConcurso.getFechafin()))
+                        {
+                            CtrlPrincipal.instance().ctrlBD.SetQuery ("SELECT COUNT(*) FROM CONCURSO WHERE ID_MATERIA='"+CtrlPrincipal.instance().vistaPublicarConcurso.getIDMateria()+"' AND SEMESTRE='"+CtrlPrincipal.instance().vistaPublicarConcurso.getSemestre()+"'");
+                            
+                            ResultSet auxRset = CtrlPrincipal.instance().ctrlBD.GetQuery();
+                            
+                            if(auxRset.next())
+                            {
+                                if(Integer.parseInt(auxRset.getString(1)) == 0)
+                                {
+                                    if(CtrlPrincipal.instance().ctrlBD.SetQuery("INSERT INTO CONCURSO VALUES (concurso_seq.NEXTVAL,'Abierto',"+CtrlPrincipal.instance().vistaPublicarConcurso.getIDMateria()+",'"+CtrlPrincipal.instance().vistaPublicarConcurso.getSemestre()+"',"+CtrlPrincipal.instance().sesionCoordinador.getCedula()+",'"+CtrlPrincipal.instance().vistaPublicarConcurso.getFechaInicio()+"','"+CtrlPrincipal.instance().vistaPublicarConcurso.getFechafin()+"')"))
+                                         JOptionPane.showMessageDialog(null,"Concurso públicado exitosamente");
+                                    else
+                                        JOptionPane.showMessageDialog(null,"No se pudo publicar el concurso");
+                                }else
+                                    JOptionPane.showMessageDialog(null,"Ya existe un concurso abierto para esta materia");
+                            }
+                        }else
+                            JOptionPane.showMessageDialog(null,"Formato de fechas incorrecto");
+                    }else
+                        JOptionPane.showMessageDialog(null,"Formato de fechas incorrecto");
                 }else
-                    JOptionPane.showMessageDialog(null,"error");
+                    JOptionPane.showMessageDialog(null,"Los campos deben ser llenados");
+                break;
+                
+            case 7:
+                
+                CtrlPrincipal.instance().vistaCoordinador.setVisible(false);
+                CtrlPrincipal.instance().vistaModificarEstadoConcurso = new IModificarEstadoConcurso();
+                CtrlPrincipal.instance().vistaModificarEstadoConcurso.setLocationRelativeTo(null);
+                CtrlPrincipal.instance().vistaModificarEstadoConcurso.setVisible(true);
+                break;
+                
+            case 8:
+                
+                 CtrlPrincipal.instance().vistaModificarEstadoConcurso.setVisible(true);
+                 CtrlPrincipal.instance().vistaCoordinador = new ICoordinador();
+                 CtrlPrincipal.instance().vistaCoordinador.setLocationRelativeTo(null);
+                 CtrlPrincipal.instance().vistaCoordinador.setVisible(true);
+                 break;
+                
+            case 9:
+                
+                if(CtrlPrincipal.instance().vistaModificarEstadoConcurso.EmptyFields())
+                {
+                    if(CtrlPrincipal.instance().VerificarLongitudFechas(CtrlPrincipal.instance().vistaModificarEstadoConcurso.getFechaInicio(),CtrlPrincipal.instance().vistaModificarEstadoConcurso.getFechafin()))
+                    {
+                        if(CtrlPrincipal.instance().verificarFecha(CtrlPrincipal.instance().vistaModificarEstadoConcurso.getFechaInicio(), CtrlPrincipal.instance().vistaModificarEstadoConcurso.getFechafin()))
+                        {
+                            if(CtrlPrincipal.instance().ctrlBD.SetQuery ("UPDATE CONCURSO SET FECHA_INICIO='"+CtrlPrincipal.instance().vistaModificarEstadoConcurso.getFechaInicio()+"', FECHA_FIN='"+CtrlPrincipal.instance().vistaModificarEstadoConcurso.getFechafin()+"', STATUS='"+CtrlPrincipal.instance().vistaModificarEstadoConcurso.getComboBoxValue()+"' WHERE ID_MATERIA="+CtrlPrincipal.instance().vistaModificarEstadoConcurso.getIDMateria()+" AND SEMESTRE='"+CtrlPrincipal.instance().vistaModificarEstadoConcurso.getSemestre()+"'"))
+                            {
+                                CtrlPrincipal.instance().vistaModificarEstadoConcurso.setVisible(false);
+                                CtrlPrincipal.instance().vistaModificarEstadoConcurso = new IModificarEstadoConcurso();
+                                CtrlPrincipal.instance().vistaModificarEstadoConcurso.setLocationRelativeTo(null);
+                                CtrlPrincipal.instance().vistaModificarEstadoConcurso.setVisible(true);
+                                JOptionPane.showMessageDialog(null, "Update realizado con éxito");
+                            }else
+                                JOptionPane.showMessageDialog(null, "Error al realizar el update");
+                        }else
+                            JOptionPane.showMessageDialog(null, "Error en el formato de las fechas");
+                    }else
+                        JOptionPane.showMessageDialog(null, "Error en el formato de las fechas");
+                }else
+                    JOptionPane.showMessageDialog(null, "Los campos deben estar llenos");
                 break;
                 
             case 100: //Cerrar sesion desde la interafz principal
@@ -116,7 +176,5 @@ public class CtrlCoordinador {
 
         }
     }    
-    
-  
 
 }
