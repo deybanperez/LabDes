@@ -7,6 +7,7 @@ package Usuario.Coordinador;
 
 import Controladores.CtrlPrincipal;
 import Main.IPrincipal;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
@@ -1359,6 +1360,8 @@ public class IModificarEstadoConcurso extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(28);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IModificarEstadoConcurso.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -1396,6 +1399,8 @@ public class IModificarEstadoConcurso extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(46);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IModificarEstadoConcurso.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -1410,6 +1415,8 @@ public class IModificarEstadoConcurso extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(47);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IModificarEstadoConcurso.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
