@@ -18,6 +18,7 @@ import Usuario.Preparador.*;
 import Usuario.SecretariaDepartamento.*;
 import Usuario.SecretariaEscuela.*;
 import Usuario.TipoUsuario;
+import java.io.IOException;
 import java.sql.Array;
 import javax.swing.JOptionPane;
 
@@ -67,12 +68,12 @@ public class CtrlPrincipal
     
     
     
-    public static void main (String[] args) throws SQLException{
+    public static void main (String[] args) throws SQLException, IOException{
         instance().selectOption(1);
     }
     
     
-    public void selectOption(int opc) throws SQLException{
+    public void selectOption(int opc) throws SQLException, IOException{
     
     
         switch(opc){
@@ -133,7 +134,7 @@ public class CtrlPrincipal
                                                     CtrlAspirante.instance().selectOption(1);
                                                 }
                                           
-                                                                                
+                                                    this.vistaAspirante.actualizarMisConcursos();
                                                 break;
                                             case "COORDINADOR":
 

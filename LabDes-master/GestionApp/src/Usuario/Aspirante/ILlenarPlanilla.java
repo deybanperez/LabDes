@@ -391,7 +391,7 @@ public class ILlenarPlanilla extends javax.swing.JFrame {
         // TODO add your handling code here:
                 try {
             // TODO add your handling code here:
-            CtrlAspirante.instance().selectOption(4);
+            CtrlAspirante.instance().selectOption(2);
         } catch (Exception ex) {
             Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
         }

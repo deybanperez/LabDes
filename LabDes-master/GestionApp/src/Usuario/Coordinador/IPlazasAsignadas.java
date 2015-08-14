@@ -7,6 +7,7 @@ package Usuario.Coordinador;
 
 import Controladores.CtrlPrincipal;
 import Main.IPrincipal;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -230,6 +231,8 @@ public class IPlazasAsignadas extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(0);
         } catch (SQLException ex) {
             Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IPlazasAsignadas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ExitOptionMouseClicked
 
@@ -240,6 +243,8 @@ public class IPlazasAsignadas extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(69);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IPlazasAsignadas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ExitOptionActionPerformed
 
@@ -263,6 +268,8 @@ public class IPlazasAsignadas extends javax.swing.JFrame {
         try {
             CtrlPrincipal.instance().selectOption(41);
         } catch (SQLException ex) {
+            Logger.getLogger(IPlazasAsignadas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(IPlazasAsignadas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed

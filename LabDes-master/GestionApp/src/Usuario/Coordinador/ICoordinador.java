@@ -7,6 +7,7 @@ package Usuario.Coordinador;
 
 import Controladores.CtrlPrincipal;
 import Main.IPrincipal;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
@@ -1270,6 +1271,8 @@ public class ICoordinador extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(0);
         } catch (SQLException ex) {
             Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ExitOptionMouseClicked
 
@@ -1280,6 +1283,8 @@ public class ICoordinador extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(68);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ExitOptionActionPerformed
 
@@ -1293,6 +1298,8 @@ public class ICoordinador extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(42);
         } catch (SQLException ex) {
             Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_publicarConcursoActionPerformed
 
@@ -1303,6 +1310,8 @@ public class ICoordinador extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(40);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_visualizarPlazasActionPerformed
 

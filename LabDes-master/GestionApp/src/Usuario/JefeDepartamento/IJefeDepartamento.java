@@ -8,6 +8,7 @@ package Usuario.JefeDepartamento;
 import BD.CtrlBD;
 import Controladores.CtrlPrincipal;
 import Main.IPrincipal;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -103,10 +104,7 @@ public class IJefeDepartamento extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
         );
 
         jMenu1.setText("App");
@@ -172,6 +170,8 @@ public class IJefeDepartamento extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(29);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IJefeDepartamento.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -184,6 +184,8 @@ public class IJefeDepartamento extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(10);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IJefeDepartamento.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 

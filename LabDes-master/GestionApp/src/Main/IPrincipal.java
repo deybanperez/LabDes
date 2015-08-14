@@ -7,6 +7,7 @@ package Main;
 
 import Controladores.CtrlPrincipal;
 import com.sun.glass.events.KeyEvent;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -167,6 +168,8 @@ public class IPrincipal extends javax.swing.JFrame
             CtrlPrincipal.instance().selectOption(2);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_loginMouseClicked
 
@@ -181,6 +184,8 @@ public class IPrincipal extends javax.swing.JFrame
             CtrlPrincipal.instance().selectOption(2);
             } catch (SQLException ex)
             {
+                Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
         
@@ -198,6 +203,8 @@ public class IPrincipal extends javax.swing.JFrame
             CtrlPrincipal.instance().selectOption(2);
             } catch (SQLException ex)
             {
+                Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
         

@@ -7,12 +7,23 @@ package Usuario.Aspirante;
 
 import Controladores.CtrlAspirante;
 import Controladores.CtrlPrincipal;
-import com.itextpdf.text.DocumentException;
+import Usuario.Coordinador.ICoordinador;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 /**
@@ -24,14 +35,71 @@ public class IAspirante extends javax.swing.JFrame {
     /**
      * Creates new form IAspirante
      */
-    public IAspirante() throws SQLException {
-        initComponents();
-        //DefaultTableCellRenderer centerRenderer = new DefaultTableCellHeaderRenderer();
+    DefaultTableModel modelo;
+    JFileChooser file;
+     
+    public IAspirante() throws SQLException
+    {
+  
+        try {
+        int fila=0,columna=0;
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellHeaderRenderer();
         
-        //nombreSesion.setText("Usuario: "+CtrlPrincipal.instance().sesionAspirante.getNombre()+" "+CtrlPrincipal.instance().sesionAspirante.getApellido());
-        //centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        initComponents(); 
+        CtrlPrincipal.instance().ctrlBD.SetQuery("SELECT USUARIO.NOMBRE_USUARIO, USUARIO.APELLIDO, USUARIO.CORREOE, MATERIA_SEMESTRE.NOMBRE_MATERIA, MATERIA_SEMESTRE.SEMESTRE, CONCURSO.FECHA_INICIO, CONCURSO.FECHA_FIN FROM USUARIO, MATERIA_SEMESTRE, CONCURSO WHERE CONCURSO.CEDULA_COORDINADOR=USUARIO.CEDULA AND CONCURSO.ID_MATERIA = MATERIA_SEMESTRE.ID_MATERIA");
+        ResultSet auxRset = CtrlPrincipal.instance().ctrlBD.GetQuery();
+     
+        while (auxRset.next())
+        {
+            DefaultTableModel model= (DefaultTableModel) jTable1.getModel();
+            model.addRow(new Vector());
+            this.jTable1.setValueAt(auxRset.getString(1)+" "+auxRset.getString(2), fila, columna++);
+            this.jTable1.setValueAt(auxRset.getString(3), fila, columna++);
+            this.jTable1.setValueAt(auxRset.getString(4), fila, columna++);
+            this.jTable1.setValueAt(auxRset.getString(5), fila, columna++); 
+            this.jTable1.setValueAt(auxRset.getString(6), fila, columna++);
+            this.jTable1.setValueAt(auxRset.getString(7), fila, columna++);
+            columna=0;
+            fila++;
+        }
+        
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+               
+        for(int i = 0; i < this.jTable1.getColumnCount(); i++)
+            this.jTable1.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        
+ 
+        } catch (SQLException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+public void actualizarMisConcursos() throws SQLException{
+        int fila=0,columna=0;
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellHeaderRenderer();
 
+        CtrlPrincipal.instance().ctrlBD.SetQuery("SELECT USUARIO.NOMBRE_USUARIO, USUARIO.APELLIDO, USUARIO.CORREOE, MATERIA_SEMESTRE.NOMBRE_MATERIA, MATERIA_SEMESTRE.SEMESTRE, CONCURSO.FECHA_INICIO, CONCURSO.FECHA_FIN, ASPIRACIONES.STATUS FROM USUARIO, MATERIA_SEMESTRE, CONCURSO, ASPIRACIONES WHERE ASPIRACIONES.ID_ASPIRANTE = "+CtrlPrincipal.instance().sesionAspirante.getCedula() +" AND ASPIRACIONES.ID_CONCURSO=CONCURSO.ID_CONCURSO AND (ASPIRACIONES.CEDULA_COORDINADOR=CONCURSO.CEDULA_COORDINADOR AND CONCURSO.CEDULA_COORDINADOR=USUARIO.CEDULA AND CONCURSO.ID_MATERIA = MATERIA_SEMESTRE.ID_MATERIA)");
+        ResultSet auxRset = CtrlPrincipal.instance().ctrlBD.GetQuery();
+     
+        while (auxRset.next())
+        {
+            DefaultTableModel model= (DefaultTableModel) jTable2.getModel();
+            model.addRow(new Vector());
+            this.jTable2.setValueAt(auxRset.getString(1)+" "+auxRset.getString(2), fila, columna++);
+            this.jTable2.setValueAt(auxRset.getString(3), fila, columna++);
+            this.jTable2.setValueAt(auxRset.getString(4), fila, columna++);
+            this.jTable2.setValueAt(auxRset.getString(5), fila, columna++); 
+            this.jTable2.setValueAt(auxRset.getString(6), fila, columna++);
+            this.jTable2.setValueAt(auxRset.getString(7), fila, columna++);
+            this.jTable2.setValueAt(auxRset.getString(8), fila, columna++);
+            columna=0;
+            fila++;
+        }
+        
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+               
+        for(int i = 0; i < this.jTable2.getColumnCount(); i++)
+            this.jTable2.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,7 +112,10 @@ public class IAspirante extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        nombreSesion = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        btn_salir = new javax.swing.JButton();
         MenuBar = new javax.swing.JMenuBar();
         Salir = new javax.swing.JMenu();
         ExitOption = new javax.swing.JMenuItem();
@@ -53,29 +124,32 @@ public class IAspirante extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Aspirante");
         setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Notificaciones", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 24))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Concursos Abiertos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 24))); // NOI18N
         jPanel1.setToolTipText("");
 
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Coordinador", "Correo", "Materia", "Semestre", "Fecha Inicio", "Fecha Fin"
             }
         ));
+        jTable1.setEnabled(false);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -84,22 +158,64 @@ public class IAspirante extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 16, Short.MAX_VALUE))
         );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Mis Concursos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Consolas", 1, 24))); // NOI18N
+        jPanel2.setToolTipText("");
+
+        jTable2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Coordinador", "Correo", "Materia", "Semestre", "Fecha Inicio", "Fecha Fin", "Status"
+            }
+        ));
+        jTable2.setEnabled(false);
+        jScrollPane3.setViewportView(jTable2);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 118, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addContainerGap(29, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
+        );
+
+        btn_salir.setText("Salir");
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_salirActionPerformed(evt);
+            }
+        });
 
         Salir.setText("App");
         Salir.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
 
         ExitOption.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
-        ExitOption.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        ExitOption.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         ExitOption.setText("Salir");
         ExitOption.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -119,7 +235,7 @@ public class IAspirante extends javax.swing.JFrame {
         jMenu3.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
 
         EditarPerfil.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        EditarPerfil.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        EditarPerfil.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         EditarPerfil.setText("Ver");
         EditarPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,22 +245,17 @@ public class IAspirante extends javax.swing.JFrame {
         jMenu3.add(EditarPerfil);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem4.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        jMenuItem4.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
         jMenuItem4.setText("Editar");
         jMenu3.add(jMenuItem4);
 
         MenuBar.add(jMenu3);
 
         jMenu2.setText("Acciones");
-        jMenu2.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        jMenu2.setFont(new java.awt.Font("Consolas", 0, 15)); // NOI18N
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.SHIFT_MASK));
         jMenuItem1.setText("Llenar planilla");
-        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuItem1MouseClicked(evt);
-            }
-        });
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -152,22 +263,32 @@ public class IAspirante extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem1);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem2.setText("Consignar Recaudos");
+        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.SHIFT_MASK));
+        jMenuItem6.setText("Mis Concursos");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem6);
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_MASK));
+        jMenuItem2.setText("Aspirar a Concurso");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem3.setText("Aceptar Plaza ");
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK));
+        jMenuItem3.setText("Consignar");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
             }
         });
         jMenu2.add(jMenuItem3);
-
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_MASK));
-        jMenuItem5.setText("Rechazar Plaza");
-        jMenu2.add(jMenuItem5);
 
         MenuBar.add(jMenu2);
 
@@ -178,61 +299,130 @@ public class IAspirante extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(nombreSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addContainerGap(31, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(40, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(nombreSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(34, 34, 34)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_salir)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ExitOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitOptionActionPerformed
-        // TODO add your handling code here:
+        try {
+            CtrlPrincipal.instance().selectOption(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_ExitOptionActionPerformed
 
     private void EditarPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarPerfilActionPerformed
         // TODO add your handling code here:
+        
+        /*  SE LLAMARA LA INTERFAZ DE IPerfil 
+        Usuario.IPerfil iperfil= new Usuario.IPerfil();
+        iperfil.setVisible(true);
+        this.setVisible(false);
+        
+        */       
+        
+        
     }//GEN-LAST:event_EditarPerfilActionPerformed
 
     private void ExitOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitOptionMouseClicked
         try {
-            // TODO add your handling code here:
             CtrlPrincipal.instance().selectOption(0);
         } catch (SQLException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ExitOptionMouseClicked
 
+    private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
+        try {
+            CtrlPrincipal.instance().selectOption(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_salirActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        try {
+            CtrlAspirante.instance().selectOption(6);
+        } catch (SQLException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        
         try {
             CtrlAspirante.instance().selectOption(3);
         } catch (SQLException ex) {
             Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        } catch (IOException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+                
+        try {
+            CtrlAspirante.instance().selectOption(8);
+        } catch (SQLException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
+       try {
+            CtrlAspirante.instance().selectOption(7);
+        } catch (SQLException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IAspirante.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
-        
+  
 
-    }//GEN-LAST:event_jMenuItem1MouseClicked
+    
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -240,16 +430,19 @@ public class IAspirante extends javax.swing.JFrame {
     private javax.swing.JMenuItem ExitOption;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JMenu Salir;
+    private javax.swing.JButton btn_salir;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel nombreSesion;
+    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

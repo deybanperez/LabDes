@@ -9,6 +9,7 @@ import BD.CtrlBD;
 import Controladores.CtrlPrincipal;
 import Controladores.CtrlJefeDepartamento;
 import Main.IPrincipal;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -326,6 +327,8 @@ public class IAsignarPlazas extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(28);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IAsignarPlazas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -336,6 +339,8 @@ public class IAsignarPlazas extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(12);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IAsignarPlazas.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -347,6 +352,8 @@ public class IAsignarPlazas extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(11);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IAsignarPlazas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

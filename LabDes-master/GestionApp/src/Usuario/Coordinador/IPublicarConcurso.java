@@ -8,6 +8,7 @@ package Usuario.Coordinador;
 import BD.CtrlBD;
 import Controladores.CtrlPrincipal;
 import Main.IPrincipal;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -303,7 +304,7 @@ public class IPublicarConcurso extends javax.swing.JFrame {
                         .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(fechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(91, 91, 91)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
                 .addGap(64, 64, 64)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -401,10 +402,7 @@ public class IPublicarConcurso extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(32, 32, 32))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -416,6 +414,8 @@ public class IPublicarConcurso extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(0);
         } catch (SQLException ex) {
             Logger.getLogger(ICoordinador.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IPublicarConcurso.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ExitOptionMouseClicked
 
@@ -426,6 +426,8 @@ public class IPublicarConcurso extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(67);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IPublicarConcurso.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ExitOptionActionPerformed
 
@@ -440,6 +442,8 @@ public class IPublicarConcurso extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(40);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IPublicarConcurso.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_visualizarPlazasActionPerformed
 
@@ -458,6 +462,8 @@ public class IPublicarConcurso extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(43);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IPublicarConcurso.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -469,6 +475,8 @@ public class IPublicarConcurso extends javax.swing.JFrame {
             CtrlPrincipal.instance().selectOption(44);
         } catch (SQLException ex) {
             Logger.getLogger(IPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(IPublicarConcurso.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

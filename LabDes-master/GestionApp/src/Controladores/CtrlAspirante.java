@@ -8,7 +8,10 @@ package Controladores;
 import BD.CtrlBD;
 import Main.IPrincipal;
 import Usuario.Aspirante.IAspirante;
+import Usuario.Aspirante.IAspirar;
+import Usuario.Aspirante.IConsignar;
 import Usuario.Aspirante.ILlenarPlanilla;
+import Usuario.Aspirante.IMisConcursos;
 import Usuario.Coordinador.ICoordinador;
 import Usuario.DirectorEscuela.IDirectorEscuela;
 import Usuario.JefeDepartamento.IAsignarPlazas;
@@ -25,10 +28,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -44,10 +49,19 @@ public class CtrlAspirante
 {
     private static CtrlAspirante uniqueInstance = null;
     public ILlenarPlanilla ILlenarPlanilla;
-    
+    public IMisConcursos IMisConcursos;
+    public IConsignar IConsignar;
+    public IAspirar IAspirar;
+    public ArrayList<String> ids_concurso;
+    public ArrayList<String> ids_materia;
+    public ArrayList<String> ids_coordinador;
+    public int selected;
     private CtrlAspirante() throws SQLException{
         uniqueInstance = this;
         ILlenarPlanilla = new ILlenarPlanilla();
+        IMisConcursos = new IMisConcursos();
+        IConsignar= new IConsignar();
+        IAspirar= new IAspirar();
     }
     
     public static CtrlAspirante instance() throws SQLException{//Al referirse a este controlador, invocarlo por este metodo
@@ -59,9 +73,9 @@ public class CtrlAspirante
     
   
     
-    public void selectOption(int opc) throws SQLException{
+    public void selectOption(int opc) throws SQLException, IOException{
     
-    
+    try{
         switch(opc){
             case 0:
                 System.exit(0);
@@ -75,11 +89,13 @@ public class CtrlAspirante
 
             break;
 
-            case 2://Regresar ILlenarPlanilla
+            case 2://Regresar
                 CtrlPrincipal.instance().vistaAspirante.setLocationRelativeTo(null);
                 CtrlPrincipal.instance().vistaAspirante.setVisible(true);
                 ILlenarPlanilla.setVisible(false);
-                
+                IMisConcursos.setVisible(false);
+                IConsignar.setVisible(false);
+                IAspirar.setVisible(false);
             break;
                 
             case 3: //Click LlenarPlanilla IAspirante
@@ -138,8 +154,92 @@ public class CtrlAspirante
 
             
             break;
+            
+            case 5:
+         //PdfReader pdfReader2;
+                /*String dir = CtrlPrincipal.instance().vistaAspirante.getFile().getCurrentDirectory().getAbsolutePath();
+                System.err.println(dir+"/"+CtrlPrincipal.instance().vistaAspirante.getArch_subido().getText());
+                try{ 
+                //definiendo la ruta en la propiedad file
+                Runtime.getRuntime().exec("cmd /c start "+dir+"/"+CtrlPrincipal.instance().vistaAspirante.getArch_subido().getText());
+
+                }catch(IOException e){
+                   e.printStackTrace();
+                } */
+        
+                
+                String path = IConsignar.getFile().getCurrentDirectory().getAbsolutePath();
+                //String path = "src/Usuario/Aspirante/Documentos_"+CtrlPrincipal.instance().sesionAspirante.getCedula();
+                File dir = new File(path);
+                FileOutputStream file_output;
+                dir.mkdirs();
+                file_output=new FileOutputStream("src/Usuario/Aspirante/Documentos_"+CtrlPrincipal.instance().sesionAspirante.getCedula()+"/"+IConsignar.getArch_subido().getText());
+                JOptionPane.showMessageDialog(null, "Archivo guradado exitosamente!");
+
+
+                
+                /*if (Desktop.isDesktopSupported()) {
+
+                    File myFile = new File(path+"/"+CtrlPrincipal.instance().vistaAspirante.getArch_subido().getText());
+                    Desktop.getDesktop().open(myFile);
+                }*/
+
+
+
+            case 6:
+               
+                IMisConcursos.setLocationRelativeTo(null);
+                IMisConcursos.setVisible(true);
+                CtrlPrincipal.instance().vistaAspirante.setVisible(false);
+                break;
+                   
+
+
+               
+            case 7:    
+                IConsignar.setLocationRelativeTo(null);
+                IConsignar.setVisible(true);
+                CtrlPrincipal.instance().vistaAspirante.setVisible(false);
+                break;
+                
+            case 8:
+                IAspirar.setLocationRelativeTo(null);
+                IAspirar.setVisible(true);
+                CtrlPrincipal.instance().vistaAspirante.setVisible(false);
+            break;
+            case 9:
+                          
+                
+                String id_asp = CtrlPrincipal.instance().sesionAspirante.getCedula();
+                String id_conc = this.ids_concurso.get(selected);
+                String semestre = IAspirar.getLabel_Semestre();
+                String id_coord = this.ids_coordinador.get(selected);;
+                String id_mat =this.ids_materia.get(selected);;
+                String nota = "-1";
+                CtrlPrincipal.instance().ctrlBD.SetQuery(""
+                        + "INSERT INTO ASPIRACIONES VALUES ("
+                        + "aspiraciones_seq.NEXTVAL,"
+                        +id_asp+","
+                        +id_conc+","
+                        + "'Pendiente',"
+                        + "'"+semestre+"',"
+                        + id_coord + ","
+                        + id_mat + ","
+                        + nota
+                        + ")");
+                JOptionPane.showMessageDialog(null, "Usted ha sido agregado al concurso");
+                IAspirar.setLocationRelativeTo(null);
+                IAspirar.setVisible(false);
+                CtrlPrincipal.instance().vistaAspirante.actualizarMisConcursos();
+                CtrlPrincipal.instance().vistaAspirante.setVisible(true);
+            break;                
+                   
         }
-    }    
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+
+          }
+    }
     
     
     public static int calcularEdad(String nDate) {
